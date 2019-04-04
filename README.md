@@ -1,4 +1,7 @@
 - [About AppMap](#about-appmap)
+- [Usage](#usage)
+  - [AppMap client command reference](#appmap-client-command-reference)
+  - [Pruning](#pruning)
 - [appmap.json](#appmapjson)
     - [version](#version)
     - [metadata](#metadata)
@@ -18,6 +21,33 @@
 # About AppMap
 
 This is the home project for AppMap, automatic extraction of metadata from code and visual depiction. 
+
+# Usage
+
+Basic usage of AppMap proceeds according to the following steps:
+
+1. Install the AppMap client for the programming environment. For example, install the Ruby gem for Ruby
+   projects; install the npm package for Node.js; install the Go module for Golang.
+2. Run the AppMap client to perform static or dynamic inspection of the code. In static mode, the client inspects all
+   the project code without actually running any of it. In dynamic mode, the client executes the program through some
+   scenario, and records all the important interactions (e.g. function calls) which occur. Whether performing static or
+   dynamic inspection, the output is an [appmap.json](#appmap.json) file.
+3. Upload the `appmap.json` file to the AppMap server, which creates visual depictions of the code.
+
+## AppMap client command reference
+
+Each AppMap client performs basically the same functions:
+
+* `appmap inspect` Perform a static inspection of the code and generate `appmap.json`.
+* `appmap record` Perform a dynamic inspection of the code by actually executing and observing the code. Generate
+  `appmap.json` on completion.
+* `appmap upload` Upload an `appmap.json` file to the AppMap server.
+
+## Pruning
+
+When `appmap.json` is uploaded to the AppMap server, the file can be pruned to remove extraneous information.
+This results in a more compact and faster upload. For example, if a dynamic inspection was performed, then only the code
+which was actually executed at some point during the program execution may be retained.
 
 # appmap.json
 
