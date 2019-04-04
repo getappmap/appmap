@@ -2,15 +2,18 @@
 - [appmap.json](#appmapjson)
     - [version](#version)
     - [metadata](#metadata)
+      - [Example](#example)
     - [classMap](#classmap)
       - [Common attributes](#common-attributes)
       - ["package" and "class" attributes](#%22package%22-and-%22class%22-attributes)
       - ["function" attributes](#%22function%22-attributes)
+      - [Example](#example-1)
     - [events](#events)
       - [Common attributes](#common-attributes-1)
       - ["call" attributes](#%22call%22-attributes)
       - ["return" attributes](#%22return%22-attributes)
       - ["self", "parameters" and "return_value"](#%22self%22-%22parameters%22-and-%22returnvalue%22)
+      - [Example](#example-2)
 
 # About AppMap
 
@@ -18,19 +21,13 @@ This is the home project for AppMap, automatic extraction of metadata from code 
 
 # appmap.json
 
-The `appmap.json` file contains the metadata which is extracted from a code repo. 
-
-`appmap.json` is a JSON object which is composed of the following elements:
+The file `appmap.json` contains metadata which is extracted from a code repo.  It is a JSON object with the following
+general structure:
 
 ```
 {
   "version": <integer>,
-  "metadata": {
-    "repository": <url>,
-    "branch": <string>,
-    "commit": <string>,
-    "labels": [ <string> ]
-  },
+  "metadata": <object>,
   "classMap": [ <list of objects> ],
   "events": [ <list of objects> ]
 }
@@ -54,6 +51,17 @@ data was generated.
 * **branch** *Optional* code branch.
 * **commit** *Optional* commit identifier.
 * **labels** *Optional* list of arbitrary labels describing the AppMap.
+
+#### Example
+
+```
+{
+  "repository": "https://github.com/applandinc/appmap",
+  "branch": "master",
+  "commit": "c3424f9",
+  "labels": [ "documentation" ]
+}
+```
 
 ### classMap
 
@@ -86,6 +94,80 @@ Each "function" has the following attributes:
 
 * **location** *Required* File path and line number, separated by a colon. Example: `/Users/alice/src/myapp/lib/myapp/main.rb:5`.
 * **static** *Required* flag if the method is class-scoped (static) or instance-scoped. Must be `true` or `false`. Example: `true`.
+
+#### Example
+
+```
+[
+  {
+    "name": "appland",
+    "type": "package",
+    "children": [
+      {
+        "name": "AppLand",
+        "type": "class",
+        "children": [
+          {
+            "name": "Server",
+            "type": "class",
+            "children": [
+              {
+                "name": "API",
+                "type": "class",
+                "children": [
+                  {
+                    "name": "upload",
+                    "location": "/src/architecture/lib/appland/server/api.rb:7",
+                    "type": "function",
+                    "static": false
+                  }
+                ]
+              },
+              {
+                "name": "Model",
+                "type": "class",
+                "children": [
+                  {
+                    "name": "User",
+                    "location": "/src/architecture/lib/appland/server/model.rb:5",
+                    "type": "class",
+                    "children": [
+                      {
+                        "name": "create",
+                        "location": "/src/architecture/lib/appland/server/model.rb:6",
+                        "type": "function",
+                        "static": true
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Scenario",
+                    "type": "class",
+                    "children": [
+                      {
+                        "name": "create",
+                        "location": "/src/architecture/lib/appland/server/model.rb:11",
+                        "type": "function",
+                        "static": true
+                      },
+                      {
+                        "name": "review",
+                        "location": "/src/architecture/lib/appland/server/model.rb:13",
+                        "type": "function",
+                        "static": false
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
+```
 
 ### events
 
@@ -137,3 +219,120 @@ values.
 * **value** *Required* string describing the object. This is not a strict JSON serialization, but rather a display
   string which is intended for the user. These strings should be trimmed in length to 100 characters.
 
+#### Example
+
+```
+[
+  {
+    "id": 1,
+    "event": "call",
+    "defined_class": "AppLand::Local::Client",
+    "method_id": "install",
+    "path": "/src/architecture/lib/appland/local/client.rb",
+    "lineno": 5,
+    "static": true,
+    "thread_id": 70340688724000,
+    "self": {
+      "class": "Module",
+      "value": "AppLand::Local::Client",
+      "object_id": 70340693307040
+    },
+    "parameters": {
+      "name": {
+        "class": "String",
+        "value": "ruby",
+        "object_id": 70340689027780
+      }
+    }
+  },
+  {
+    "id": 2,
+    "event": "return",
+    "defined_class": "AppLand::Local::Client",
+    "method_id": "install",
+    "path": "/src/architecture/lib/appland/local/client.rb",
+    "lineno": 7,
+    "static": true,
+    "thread_id": 70340688724000,
+    "return_value": {
+      "class": "Class",
+      "value": "AppLand::Local::Client::Ruby",
+      "object_id": 70340693343340
+    },
+    "parent_id": 1,
+    "elapsed": 7.2e-05
+  },
+  {
+    "id": 3,
+    "event": "call",
+    "defined_class": "AppLand::Local::UI::UI",
+    "method_id": "initialize",
+    "path": "/src/architecture/lib/appland/local/ui.rb",
+    "lineno": 39,
+    "static": false,
+    "thread_id": 70340688724000,
+    "self": {
+      "class": "AppLand::Local::UI::UI",
+      "value": "#<struct AppLand::Local::UI::UI visualizations=nil>",
+      "object_id": 70340689072680
+    },
+    "parameters": {
+      "visualizations": {
+        "class": "Array",
+        "value": "[AppLand::Local::UI::Component::Timeline, AppLand::Local::UI::Component::CallStack, AppLand::Local::",
+        "object_id": 70340693502240
+      }
+    }
+  },
+  {
+    "id": 4,
+    "event": "return",
+    "defined_class": "AppLand::Local::UI::UI",
+    "method_id": "initialize",
+    "path": "/src/architecture/lib/appland/local/ui.rb",
+    "lineno": 41,
+    "static": false,
+    "thread_id": 70340688724000,
+    "return_value": {
+      "class": "NilClass",
+      "value": null,
+      "object_id": 8
+    },
+    "parent_id": 3,
+    "elapsed": 3.0e-06
+  },
+  {
+    "id": 5,
+    "event": "call",
+    "defined_class": "AppLand::Local::Client",
+    "method_id": "client",
+    "path": "/src/architecture/lib/appland/local/client.rb",
+    "lineno": 9,
+    "static": true,
+    "thread_id": 70340688724000,
+    "self": {
+      "class": "Module",
+      "value": "AppLand::Local::Client",
+      "object_id": 70340693307040
+    },
+    "parameters": {}
+  },
+  {
+    "id": 6,
+    "event": "return",
+    "defined_class": "AppLand::Local::Client",
+    "method_id": "client",
+    "path": "/src/architecture/lib/appland/local/client.rb",
+    "lineno": 11,
+    "static": true,
+    "thread_id": 70340688724000,
+    "return_value": {
+      "class": "Class",
+      "value": "AppLand::Local::Client::Ruby",
+      "object_id": 70340693343340
+    },
+    "parent_id": 5,
+    "elapsed": 2.0e-06
+  }
+]
+```
