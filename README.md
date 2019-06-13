@@ -76,20 +76,32 @@ The initial version is `1.0`.
 Metadata has the following attributes:
 
 * **repository** *Optional* home URL of the code.
-* **branch** *Optional* code branch.
-* **commit** *Optional* commit identifier.
 * **labels** *Optional* list of arbitrary labels describing the AppMap.
-* **username** *Optional* name of the user who generated the AppMap.
+* **git** *Optional* Information about the state of the Git repo
+  * **branch** *Required* code branch.
+  * **commit** *Required* commit identifier.
+  * **status** *Required* Status of the repo relative to the commit, represented as a list of status messages. If the repo is clean, the status should be an empty list.
+  * **tag** *Optional* latest tag.
+  * **annotated_tag** *Optional* latest annotated tag.
+  * **commits_since_tag** *Optional* Number of commits since the last tag.
+  * **commits_since_annotated_tag** *Optional* Number of commits since the last annotated tag.
 
 #### Example
 
 ```
 {
   "repository": "https://github.com/applandinc/appmap",
-  "branch": "master",
-  "commit": "c3424f9",
-  "labels": [ "documentation" ],
-  "username: "alice"
+  "labels": [ "documentation" ],  
+  "git": {
+    "branch": "master",
+    "commit": "c3424f9",
+    "status": [
+      "M spec/system/feature_spec.rb",
+      "M spec/system/user_spec.rb"
+    ],
+    "annotated_tag": "v1.1.0",
+    "commits_since_annotated_tag": "3"
+  }
 }
 ```
 
