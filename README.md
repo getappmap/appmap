@@ -75,6 +75,7 @@ The initial version is `1.0`.
 
 Metadata has the following attributes:
 
+* **name** *Optional* scenario name.
 * **repository** *Optional* home URL of the code.
 * **labels** *Optional* list of arbitrary labels describing the AppMap.
 * **git** *Optional* Information about the state of the Git repo
@@ -90,6 +91,7 @@ Metadata has the following attributes:
 
 ```
 {
+  "name": "Identity management in the UI permits login with a local password",
   "repository": "https://github.com/applandinc/appmap",
   "labels": [ "documentation" ],  
   "git": {
