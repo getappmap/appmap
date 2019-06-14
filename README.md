@@ -78,6 +78,8 @@ Metadata has the following attributes:
 * **name** *Optional* scenario name.
 * **repository** *Optional* home URL of the code.
 * **labels** *Optional* list of arbitrary labels describing the AppMap.
+* **layout** *Optional* name of the layout to apply to the Scenario.
+* **layout_owner** *Optional* user name to scope the layout name.
 * **git** *Optional* Information about the state of the Git repo
   * **branch** *Required* code branch.
   * **commit** *Required* commit identifier.
