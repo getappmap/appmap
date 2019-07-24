@@ -8,14 +8,16 @@
       - [Example](#example)
     - [classMap](#classmap)
       - [Common attributes](#common-attributes)
-      - ["package" and "class" attributes](#%22package%22-and-%22class%22-attributes)
-      - ["function" attributes](#%22function%22-attributes)
+      - [package and class attributes](#package-and-class-attributes)
+      - [function attributes](#function-attributes)
       - [Example](#example-1)
     - [events](#events)
       - [Common attributes](#common-attributes-1)
-      - ["call" attributes](#%22call%22-attributes)
-      - ["return" attributes](#%22return%22-attributes)
-      - ["self", "parameters" and "return_value"](#%22self%22-%22parameters%22-and-%22returnvalue%22)
+      - [call attributes](#call-attributes)
+      - [return attributes](#return-attributes)
+      - [HTTP server request attributes](#http-server-request-attributes)
+      - [HTTP server response attributes](#http-server-response-attributes)
+      - [self, parameters and return_value](#self-parameters-and-returnvalue)
       - [Example](#example-2)
 
 # About AppMap
@@ -130,13 +132,13 @@ Each classMap object has the following attributes:
   `show`, not `MyApp::User` or `User#show`.
 * **type** *Required* object type. Must be `"package"`, `"class"`, or `"function"`.
 
-#### "package" and "class" attributes
+#### package and class attributes
 
 Each "package" and "class" has the following attributes:
 
 * **children** *Optional* List of child objects which are semantically contained.
 
-#### "function" attributes
+#### function attributes
 
 Each "function" has the following attributes:
 
@@ -240,14 +242,14 @@ Each event object has the following attributes:
 In order to correlate function call events with function objects defined in the class map, the `path` and
 `lineno` attributes of each "call" event should exactly match the `location` attribute of the corresponding function.
 
-#### "call" attributes
+#### call attributes
 
 Each "call" event has the following attributes:
 
 * **self** *Optional* object describing the instance on which the method is called.
 * **parameters** *Optional* object describing the function call parameters.
 
-#### "return" attributes
+#### return attributes
 
 Each "return" event has the following attributes:
 
@@ -255,7 +257,25 @@ Each "return" event has the following attributes:
 * **return_value** *Optional* object describing the return value.
 * **elapsed** *Optional* elapsed time in seconds of this function call.
 
-#### "self", "parameters" and "return_value"
+#### HTTP server request attributes
+
+A "call" event which represents an HTTP server request will have an `http_server_request` attribute, which is an
+object with the following elements:
+
+* **request_method** HTTP request method
+* **path_info** HTTP request path
+* **version** HTTP version
+
+See: HTTP Request-Line https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html
+
+#### HTTP server response attributes
+
+A "return" event which represents an HTTP server response will have an `http_server_response` attribute, which is an
+object with the following elements:
+
+* **status** HTTP [status code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
+
+#### self, parameters and return_value
 
 A common format is used to describe the instance on which a function is called, function parameters, and return
 values. These attributes are:
