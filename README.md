@@ -262,9 +262,9 @@ Each "return" event has the following attributes:
 A "call" event which represents an HTTP server request will have an `http_server_request` attribute, which is an
 object with the following elements:
 
-* **request_method** HTTP request method
-* **path_info** HTTP request path
-* **version** HTTP version
+* **request_method** HTTP request method. Example: `POST`.
+* **path_info** HTTP request path. Example: `/users`.
+* **protocol** HTTP protocol descriptor. Examples: `HTTP/1.1`, `http://`.
 
 See: HTTP Request-Line https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html
 
