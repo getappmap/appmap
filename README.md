@@ -13,11 +13,13 @@
       - [Example](#example-1)
     - [events](#events)
       - [Common attributes](#common-attributes-1)
-      - [call attributes](#call-attributes)
-      - [return attributes](#return-attributes)
+      - [Function call attributes](#function-call-attributes)
+      - [Function parameter format](#function-parameter-format)
+      - [Function return attributes](#function-return-attributes)
       - [HTTP server request attributes](#http-server-request-attributes)
       - [HTTP server response attributes](#http-server-response-attributes)
-      - [self, parameters and return_value](#self-parameters-and-returnvalue)
+      - [SQL query attributes](#sql-query-attributes)
+      - [Message attributes](#message-attributes)
       - [Example](#example-2)
 
 # About AppMap
@@ -128,9 +130,9 @@ detailed differences between these language-specific concepts aren't usually ver
 
 Each classMap object has the following attributes:
 
-* **name** *Required* name. Should be the local name of the object, not the fully-scoped name. Example: `User` or
-  `show`, not `MyApp::User` or `User#show`.
-* **type** *Required* object type. Must be `"package"`, `"class"`, or `"function"`.
+* **name** *Required* name. Should be the local name of the object, not the fully-scoped name. Example: "User" or
+  "show", not "MyApp::User" or "User#show".
+* **type** *Required* object type. Must be "package", "class", or "function".
 
 #### package and class attributes
 
@@ -142,8 +144,8 @@ Each "package" and "class" has the following attributes:
 
 Each "function" has the following attributes:
 
-* **location** *Required* File path and line number, separated by a colon. Example: `/Users/alice/src/myapp/lib/myapp/main.rb:5`.
-* **static** *Required* flag if the method is class-scoped (static) or instance-scoped. Must be `true` or `false`. Example: `true`.
+* **location** *Required* File path and line number, separated by a colon. Example: "/Users/alice/src/myapp/lib/myapp/main.rb:5".
+* **static** *Required* flag if the method is class-scoped (static) or instance-scoped. Must be `true` or `false`. Example: true.
 
 #### Example
 
@@ -229,10 +231,10 @@ return from a function call which occurred during an actual program execution.
 Each event object has the following attributes:
 
 * **id** *Required* unique identifier. Example: 23522.
-* **event** *Required* event type. Must be ` "call"` or `"return"`.
+* **event** *Required* event type. Must be "call" or "return".
 * **defined_class** *Required* name of the class which defines the method. Example: "MyApp::User".
 * **method_id** *Required* name of the function which was called in this event. Example: "show".
-* **static** *Required* flag if the method is class-scoped (static) or instance-scoped. Must be `true` or `false`. Example: `true`.
+* **static** *Required* flag if the method is class-scoped (static) or instance-scoped. Must be `true` or `false`. Example: true.
 * **path** *Required* path name of the file which triggered the event. Example: "/src/architecture/lib/appland/local/client.rb".
 * **lineno** *Required* line number which triggered the event. Example: 5.
 * **thread_id** *Required* identifier of the execution thread. Example: 70340688724000.
@@ -242,19 +244,28 @@ Each event object has the following attributes:
 In order to correlate function call events with function objects defined in the class map, the `path` and
 `lineno` attributes of each "call" event should exactly match the `location` attribute of the corresponding function.
 
-#### call attributes
+#### Function call attributes
 
 Each "call" event has the following attributes:
 
-* **self** *Optional* object describing the instance on which the method is called.
 * **parameters** *Optional* object describing the function call parameters.
 
-#### return attributes
+#### Function parameter format
+
+Each parameter is an object containing the following attributes:
+
+* **object_id** *Required* unique id of the object. Example: 70340693307040
+* **class** *Required* fully qualified class name of the object. Example: "MyApp::User".
+* **value** *Required* string describing the object. This is not a strict JSON serialization, but rather a display
+  string which is intended for the user. These strings should be trimmed in length to 100 characters. Example: "MyApp
+  user 'alice'"
+
+#### Function return attributes
 
 Each "return" event has the following attributes:
 
 * **parent_id** *Required* id of the "call" event corresponding to this "return".
-* **return_value** *Optional* object describing the return value.
+* **return_value** *Optional* object describing the return value. If present, this value uses [function parameter format](#function-parameter-format).
 * **elapsed** *Optional* elapsed time in seconds of this function call.
 
 #### HTTP server request attributes
@@ -262,9 +273,9 @@ Each "return" event has the following attributes:
 A "call" event which represents an HTTP server request will have an `http_server_request` attribute, which is an
 object with the following elements:
 
-* **request_method** HTTP request method. Example: `POST`.
-* **path_info** HTTP request path. Example: `/users`.
-* **protocol** HTTP protocol descriptor. Examples: `HTTP/1.1`, `http://`.
+* **request_method** *Required* HTTP request method. Example: "POST".
+* **path_info** *Required* HTTP request path. Example: "/users".
+* **protocol** *Optional* HTTP protocol and version. Example: "HTTP/1.1", "http://".
 
 See: HTTP Request-Line https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html
 
@@ -273,18 +284,22 @@ See: HTTP Request-Line https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html
 A "return" event which represents an HTTP server response will have an `http_server_response` attribute, which is an
 object with the following elements:
 
-* **status** HTTP [status code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
+* **status** *Required* HTTP [status code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
 
-#### self, parameters and return_value
+#### SQL query attributes
 
-A common format is used to describe the instance on which a function is called, function parameters, and return
-values. These attributes are:
+A "call" event which represents a SQL query will have an `sql_query` attribute, which is an
+object with the following elements:
 
-* **object_id** *Required* unique id of the object. Example: 70340693307040
-* **class** *Required* fully qualified class name of the object. Example: "MyApp::User".
-* **value** *Required* string describing the object. This is not a strict JSON serialization, but rather a display
-  string which is intended for the user. These strings should be trimmed in length to 100 characters. Example: "MyApp
-  user 'alice'"
+* **database_type** *Required* name of the database. Example: "postgresql".
+* **sql** *Required* SQL query string.
+* **explain_sql** *Optional* query plan provided by the database engine.
+* **server_version** *Optional* database server version.
+
+#### Message attributes
+
+A "call" event which represents the receipt of a message will have a `message` attribute, which
+is an object with arbitrary keys and values.
 
 #### Example
 
