@@ -24,7 +24,7 @@
 
 # About AppMap
 
-This is the home project for AppMap, automatic extraction of metadata from code and visual depiction. 
+This is the home project for AppMap, automatic extraction of events and metadata from code. 
 
 # Usage
 
@@ -34,9 +34,9 @@ Basic usage of AppMap proceeds according to the following steps:
    projects; install the npm package for Node.js; install the Go module for Golang.
 2. Run the AppMap client to perform static or dynamic inspection of the code. In static mode, the client inspects all
    the project code without actually running any of it. In dynamic mode, the client executes the program through some
-   scenario, and records all the important interactions (e.g. function calls) which occur. Whether performing static or
-   dynamic inspection, the output is an [appmap.json](#appmap.json) file.
-3. Upload the `appmap.json` file to the AppMap server, which creates visual depictions of the code.
+   scenario, and records all the important events (e.g. SQL queries, function calls) which occur. Whether performing static or
+   dynamic inspection, the output is an `appmap.json` file.
+3. Upload the `appmap.json` file to the AppLand server.
 
 ## AppMap client command reference
 
@@ -45,7 +45,7 @@ Each AppMap client performs basically the same functions:
 * `appmap inspect` Perform a static inspection of the code and generate `appmap.json`.
 * `appmap record` Perform a dynamic inspection of the code by actually executing and observing the code. Generate
   `appmap.json` on completion.
-* `appmap upload` Upload an `appmap.json` file to the AppMap server.
+* `appmap upload` Upload an `appmap.json` file(s) to the AppMap server.
 
 ## Pruning
 
@@ -62,8 +62,8 @@ general structure:
 {
   "version": <integer>,
   "metadata": <object>,
-  "classMap": [ <list of objects> ],
-  "events": [ <list of objects> ]
+  "classMap": [ <tree of package, class, and function objects> ],
+  "events": [ <list of event objects> ]
 }
 ```
 
@@ -123,8 +123,8 @@ Note that the terms `package` and `class` are used loosely. In general, they enc
 `directory`, `package`, `class`, `interface`, `module`, etc. Since an AppMap is a high-level representation of code, the
 detailed differences between these language-specific concepts aren't usually very important. Rules of thumb:
 
-* Use `package` to represent the organization of code into directories. A package may contain packages and classes, but not functions.
-* Use `class` to represent a type declaration in a code file. A class may contain classes and functions, but not packages.
+* Use a `package` for each directory which contains code. A package may contain classes, but not functions.
+* Use a `class` for each type declaration in a code file. A class may contain classes and functions, but not packages.
 
 #### Common attributes
 
