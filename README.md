@@ -86,6 +86,10 @@ Metadata has the following attributes:
 * **layout_owner** *Optional* user name to scope the layout name.
 * **app** *Optional* name of the app to assign to the Scenario.
 * **app_owner** *Optional* user name to scope the app name.
+* **feature** *Optional* name of the feature to associate with the Scenario. If the named feature does not exist, it may
+  be created.
+* **feature_group** *Optional* name of the feature group to associate with the Scenario. If the named feature group does not exist, it may
+  be created.
 * **git** *Optional* Information about the state of the Git repo
   * **branch** *Required* code branch.
   * **commit** *Required* commit identifier.
