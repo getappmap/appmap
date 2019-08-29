@@ -90,7 +90,14 @@ Metadata has the following attributes:
   be created.
 * **feature_group** *Optional* name of the feature group to associate with the Scenario. If the named feature group does not exist, it may
   be created.
-* **git** *Optional* Information about the state of the Git repo
+* **language** *Optional* information about the programming language in which code is written.
+  * **name** *Required* name of the programming language
+  * **version** *Required* programming language version
+  * **engine** *Optional* name of the programming langugae engine, e.g. VM variant.
+* **frameworks** *Optional* List of frameworks which the code uses.
+  * **name** *Required* name of the framework.
+  * **version** *Required* version of the framework.
+* **git** *Optional* Information about the state of the Git repo.
   * **branch** *Required* code branch.
   * **commit** *Required* commit identifier.
   * **status** *Required* Status of the repo relative to the commit, represented as a list of status messages. If the repo is clean, the status should be an empty list.
