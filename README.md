@@ -71,6 +71,11 @@ general structure:
 
 *Required* version number to which the file conforms.
 
+Version history:
+
+* **1.1** `parameters` changed to an array. Added `receiver`.
+* **1.0** Initial version.
+
 The initial version is `1.0`.
 
 ### metadata
@@ -259,12 +264,14 @@ In order to correlate function call events with function objects defined in the 
 
 Each "call" event has the following attributes:
 
-* **parameters** *Optional* object describing the function call parameters.
+* **receiver** *Required* parameter object describing the object on which the function is called. Corresponds to the `receiver`, `self` and `this` concept found in various programming languages.
+* **parameters** *Required* array of parameter objects describing the function call parameters.
 
 #### Function parameter format
 
 Each parameter is an object containing the following attributes:
 
+* **name** *Required* name of the parameter. Example: "login".
 * **object_id** *Required* unique id of the object. Example: 70340693307040
 * **class** *Required* fully qualified class name of the object. Example: "MyApp::User".
 * **value** *Required* string describing the object. This is not a strict JSON serialization, but rather a display
