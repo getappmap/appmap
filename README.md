@@ -87,7 +87,6 @@ Metadata has the following attributes:
 * **name** *Optional* scenario name.
 * **repository** *Optional* home URL of the code.
 * **labels** *Optional* list of arbitrary labels describing the AppMap.
-* **layout** *Optional* name of the layout to apply to the Scenario.
 * **app** *Optional* name of the app to assign to the Scenario.
 * **feature** *Optional* name of the feature to associate with the Scenario. If the named feature does not exist, it may
   be created.
