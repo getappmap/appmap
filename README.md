@@ -14,13 +14,16 @@
     - [events](#events)
       - [Common attributes](#common-attributes-1)
       - [Function call attributes](#function-call-attributes)
-      - [Function parameter format](#function-parameter-format)
+      - [Parameter object format](#parameter-object-format)
       - [Function return attributes](#function-return-attributes)
       - [HTTP server request attributes](#http-server-request-attributes)
       - [HTTP server response attributes](#http-server-response-attributes)
       - [SQL query attributes](#sql-query-attributes)
       - [Message attributes](#message-attributes)
       - [Example](#example-2)
+- [Changelog](#changelog)
+  - [v1.2](#v12)
+  - [v1.1](#v11)
 
 # About AppMap
 
@@ -71,12 +74,7 @@ general structure:
 
 *Required* version number to which the file conforms.
 
-Version history:
-
-* **1.1** `parameters` changed to an array. Added `receiver`.
-* **1.0** Initial version.
-
-The initial version is `1.0`.
+See the [Changelog](#changelog) section for version history.
 
 ### metadata
 
@@ -264,7 +262,7 @@ Each "call" event has the following attributes:
 * **receiver** *Required* parameter object describing the object on which the function is called. Corresponds to the `receiver`, `self` and `this` concept found in various programming languages.
 * **parameters** *Required* array of parameter objects describing the function call parameters.
 
-#### Function parameter format
+#### Parameter object format
 
 Each parameter is an object containing the following attributes:
 
@@ -314,7 +312,7 @@ object with the following elements:
 #### Message attributes
 
 A "call" event which represents the receipt of a message will have a `message` attribute, which
-is an object with arbitrary keys and values.
+is a list of objects in [parameter object format](#parameter-object-format).
 
 #### Example
 
@@ -433,3 +431,16 @@ is an object with arbitrary keys and values.
   }
 ]
 ```
+
+# Changelog
+
+## v1.2
+
+* `message` changed from a map to an array of parameter objects.
+* Added `metadata.labels`.
+* Removed `metadata.layout`, `metadata.layout_owner` and `metadata.app_owner`.
+
+## v1.1
+
+* `parameters` changed from a map to an array of parameter objects.
+* Added `receiver`, a parameter object.
