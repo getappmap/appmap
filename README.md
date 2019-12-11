@@ -92,19 +92,25 @@ Metadata has the following attributes:
   be created.
 * **language** *Optional* information about the programming language in which code is written.
   * **name** *Required* name of the programming language
-  * **version** *Required* programming language version
   * **engine** *Optional* name of the programming langugae engine, e.g. VM variant.
-* **frameworks** *Optional* List of frameworks which the code uses.
+  * **version** *Required* programming language version
+* **frameworks** *Optional* list of frameworks which the code uses.
   * **name** *Required* name of the framework.
   * **version** *Required* version of the framework.
-* **git** *Optional* Information about the state of the Git repo.
+* **client** *Required* information about the AppMap client which recorded the scenario.
+  * **name** *Required* short name of the client.
+  * **url** *Required* unique URL of the client.
+  * **version** *Optional* version of the client.
+* **recorder** *Required* information about the method which was used by the client to record the scenario.
+  * **name** *Required* name of the recording method. This name must be unique to the client, but need not be unique across different clients.
+* **git** *Optional* information about the state of the Git repo.
   * **branch** *Required* code branch.
   * **commit** *Required* commit identifier.
-  * **status** *Required* Status of the repo relative to the commit, represented as a list of status messages. If the repo is clean, the status should be an empty list.
+  * **status** *Required* status of the repo relative to the commit, represented as a list of status messages. If the repo is clean, the status should be an empty list.
   * **tag** *Optional* latest tag.
   * **annotated_tag** *Optional* latest annotated tag.
-  * **commits_since_tag** *Optional* Number of commits since the last tag.
-  * **commits_since_annotated_tag** *Optional* Number of commits since the last annotated tag.
+  * **commits_since_tag** *Optional* number of commits since the last tag.
+  * **commits_since_annotated_tag** *Optional* number of commits since the last annotated tag.
 
 #### Example
 
@@ -112,7 +118,23 @@ Metadata has the following attributes:
 {
   "name": "Identity management in the UI permits login with a local password",
   "repository": "https://github.com/applandinc/appmap",
-  "labels": [ "documentation" ],  
+  "labels": [ "documentation" ],
+  "app": "Discourse",
+  "feature": "Login with valid locally managed credentials",
+  "feature_group": "Authentication",
+  "language": {
+    "name": "ruby",
+    "engine": "ruby",
+    "version": "2.6.2"
+  },
+  "client": {
+    "name": "appmap",
+    "url": "https://github.com/applandinc/appmap-ruby",
+    "version": "0.21.0"
+  },  
+  "recorder": {
+    "name": "rspec"
+  },
   "git": {
     "branch": "master",
     "commit": "c3424f9",
