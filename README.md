@@ -459,8 +459,8 @@ is a list of objects in [parameter object format](#parameter-object-format).
 ## v1.2
 
 * `message` changed from a map to an array of parameter objects.
-* Added `metadata.labels`.
-* Removed `metadata.layout`, `metadata.layout_owner` and `metadata.app_owner`.
+* Added `labels`, `client`, and `recorder` to `metadata`.
+* Removed `layout`, `layout_owner` and `app_owner` from `metadata`.
 
 ## v1.1
 
