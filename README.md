@@ -103,6 +103,9 @@ Metadata has the following attributes:
   * **version** *Optional* version of the client.
 * **recorder** *Required* information about the method which was used by the client to record the scenario.
   * **name** *Required* name of the recording method. This name must be unique to the client, but need not be unique across different clients.
+* **recording** *Optional* information about the entry-point function which was recorded.
+  * **defined_class** *Required* name of the class which defines the entry-point function.
+  * **method_id** *Required* name of the recorded function.
 * **git** *Optional* information about the state of the Git repo.
   * **branch** *Required* code branch.
   * **commit** *Required* commit identifier.
