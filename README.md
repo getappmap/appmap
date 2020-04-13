@@ -15,6 +15,7 @@
       - [Common attributes](#common-attributes-1)
       - [Function call attributes](#function-call-attributes)
       - [Parameter object format](#parameter-object-format)
+      - [Exception object format](#exception-object-format)
       - [Function return attributes](#function-return-attributes)
       - [HTTP server request attributes](#http-server-request-attributes)
       - [HTTP server response attributes](#http-server-response-attributes)
@@ -298,13 +299,21 @@ Each parameter is an object containing the following attributes:
   string which is intended for the user. These strings should be trimmed in length to 100 characters. Example: "MyApp
   user 'alice'"
 
+#### Exception object format
+* **class** *Required* fully qualified class name of the exception. Example: "com.myorg.InvalidUserException"
+* **message** *Required* description of the exception cause. Example: "User attribute not defined: 'email'"
+* **object_id** *Required* unique id of the object. Example: 70340693307040
+* **path** *Optional* path name of the file where the exception was thrown. Example: "/src/main/java/com/myorg/models/User.java".
+* **lineno** *Optional* line number where the exception was thrown. Example: 264.
+
 #### Function return attributes
 
 Each "return" event has the following attributes:
 
 * **parent_id** *Required* id of the "call" event corresponding to this "return".
-* **return_value** *Optional* object describing the return value. If present, this value uses [function parameter format](#function-parameter-format).
+* **return_value** *Optional* object describing the return value. If present, this value uses [parameter object format](#parameter-object-format).
 * **elapsed** *Optional* elapsed time in seconds of this function call.
+* **exceptions** *Optional* array of exceptions causing this method to exit. If present, this value uses [exception object format](#exception-object-format)
 
 #### HTTP server request attributes
 
@@ -446,11 +455,15 @@ is a list of objects in [parameter object format](#parameter-object-format).
     "lineno": 11,
     "static": true,
     "thread_id": 70340688724000,
-    "return_value": {
-      "class": "Class",
-      "value": "AppLand::Local::Client::Ruby",
-      "object_id": 70340693343340
-    },
+    "exceptions": [
+      {
+        "class": "ClientValidationError",
+        "message": "The client failed validation",
+        "path": "/src/architecture/lib/appland/local/client.rb",
+        "lineno": 8,
+        "object_id": 70340693343340
+      }
+    ],
     "parent_id": 5,
     "elapsed": 2.0e-06
   }
