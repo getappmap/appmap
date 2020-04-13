@@ -313,7 +313,7 @@ Each "return" event has the following attributes:
 * **parent_id** *Required* id of the "call" event corresponding to this "return".
 * **return_value** *Optional* object describing the return value. If present, this value uses [parameter object format](#parameter-object-format).
 * **elapsed** *Optional* elapsed time in seconds of this function call.
-* **exceptions** *Optional* array of exceptions causing this method to exit. If present, this value uses [exception object format](#exception-object-format)
+* **exceptions** *Optional* array of exceptions causing this method to exit. If present, this value uses [exception object format](#exception-object-format). When an exception is a wrapper for an underlying `cause`, the cause is the next exception in the `exceptions` array.
 
 #### HTTP server request attributes
 
