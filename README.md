@@ -84,7 +84,6 @@ See the [Changelog](#changelog) section for version history.
 Metadata has the following attributes:
 
 * **name** *Optional* scenario name.
-* **repository** *Optional* home URL of the code.
 * **labels** *Optional* list of arbitrary labels describing the AppMap.
 * **app** *Optional* name of the app to assign to the Scenario. The organization to which the app belongs may be specified by separating the organization name and app name by a forward slash `/`. If no organization name is specified, the data is loaded into the user's personal data set. Example of a scoped name: `myorg/myapp`. Example of an unscoped name: `myapp`. The forward-slash character is illegal in app names and org names.
 * **feature** *Optional* name of the feature to associate with the Scenario. If the named feature does not exist, it may
@@ -108,6 +107,7 @@ Metadata has the following attributes:
   * **defined_class** *Required* name of the class which defines the entry-point function.
   * **method_id** *Required* name of the recorded function.
 * **git** *Optional* information about the state of the Git repo.
+  * **repository** *Required* repository URL.
   * **branch** *Required* code branch.
   * **commit** *Required* commit identifier.
   * **status** *Required* status of the repo relative to the commit, represented as a list of status messages. If the repo is clean, the status should be an empty list.
