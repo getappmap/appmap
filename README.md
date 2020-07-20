@@ -23,6 +23,7 @@
       - [Message attributes](#message-attributes)
       - [Example](#example-2)
 - [Changelog](#changelog)
+  - [v1.3](#v13)
   - [v1.2](#v12)
   - [v1.1](#v11)
 
@@ -183,6 +184,7 @@ Each "function" has the following attributes:
 
 * **location** *Required* File path and line number, separated by a colon. Example: "/Users/alice/src/myapp/lib/myapp/main.rb:5".
 * **static** *Required* flag if the method is class-scoped (static) or instance-scoped. Must be `true` or `false`. Example: true.
+* **labels** *Optional* list of arbitrary labels describing the function.
 
 #### Example
 
@@ -254,6 +256,33 @@ Each "function" has the following attributes:
         ]
       }
     ]
+  },
+  {
+    "name": "active_support",
+    "type": "package",
+    "children": [
+      {
+        "name": "ActiveSupport",
+        "type": "class",
+        "children": [
+          {
+            "name": "SecurityUtils",
+            "type": "class",
+            "children": [
+              {
+                "name": "secure_compare",
+                "type": "function",
+                "location": "/Users/ajp/.rbenv/versions/2.6.2/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.2/lib/active_support/security_utils.rb:26",
+                "static": true,
+                "labels": [
+                  "security"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
 ]
 ```
@@ -271,7 +300,6 @@ Each event object has the following attributes:
 * **event** *Required* event type. Must be "call" or "return".
 * **defined_class** *Required* name of the class which defines the method. Example: "MyApp::User".
 * **method_id** *Required* name of the function which was called in this event. Example: "show".
-* **static** *Required* flag if the method is class-scoped (static) or instance-scoped. Must be `true` or `false`. Example: true.
 * **path** *Required* path name of the file which triggered the event. Example: "/src/architecture/lib/appland/local/client.rb".
 * **lineno** *Required* line number which triggered the event. Example: 5.
 * **thread_id** *Required* identifier of the execution thread. Example: 70340688724000.
@@ -287,6 +315,7 @@ Each "call" event has the following attributes:
 
 * **receiver** *Required* parameter object describing the object on which the function is called. Corresponds to the `receiver`, `self` and `this` concept found in various programming languages.
 * **parameters** *Required* array of parameter objects describing the function call parameters.
+* **static** *Required* flag if the method is class-scoped (static) or instance-scoped. Must be `true` or `false`. Example: true.
 
 #### Parameter object format
 
@@ -381,7 +410,6 @@ is a list of objects in [parameter object format](#parameter-object-format).
     "method_id": "install",
     "path": "/src/architecture/lib/appland/local/client.rb",
     "lineno": 7,
-    "static": true,
     "thread_id": 70340688724000,
     "return_value": {
       "class": "Class",
@@ -420,7 +448,6 @@ is a list of objects in [parameter object format](#parameter-object-format).
     "method_id": "initialize",
     "path": "/src/architecture/lib/appland/local/ui.rb",
     "lineno": 41,
-    "static": false,
     "thread_id": 70340688724000,
     "return_value": {
       "class": "NilClass",
@@ -453,7 +480,6 @@ is a list of objects in [parameter object format](#parameter-object-format).
     "method_id": "client",
     "path": "/src/architecture/lib/appland/local/client.rb",
     "lineno": 11,
-    "static": true,
     "thread_id": 70340688724000,
     "exceptions": [
       {
@@ -471,6 +497,11 @@ is a list of objects in [parameter object format](#parameter-object-format).
 ```
 
 # Changelog
+
+## v1.3
+
+* Added `labels` to a `function` entry in the classmap.
+* Removed `static` from the common attributes for an `event`, added it to `call` events.
 
 ## v1.2
 
