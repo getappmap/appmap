@@ -500,7 +500,7 @@ is a list of objects in [parameter object format](#parameter-object-format).
 ## v1.2
 
 * Added `labels` to a `function` entry in the classmap.
-* Removed `static` from the common attributes for an `event`, added it to `call` events.
+* Moved `static`, `defined_class`, `method_id`, `path`, `lineno` from `event` common attributes to `call`-only events.
 * `message` changed from a map to an array of parameter objects.
 * Added `labels`, `client`, and `recorder` to `metadata`.
 * Removed `layout`, `layout_owner` and `app_owner` from `metadata`.
