@@ -23,7 +23,6 @@
       - [Message attributes](#message-attributes)
       - [Example](#example-2)
 - [Changelog](#changelog)
-  - [v1.3](#v13)
   - [v1.2](#v12)
   - [v1.1](#v11)
 
@@ -298,10 +297,6 @@ Each event object has the following attributes:
 
 * **id** *Required* unique identifier. Example: 23522.
 * **event** *Required* event type. Must be "call" or "return".
-* **defined_class** *Required* name of the class which defines the method. Example: "MyApp::User".
-* **method_id** *Required* name of the function which was called in this event. Example: "show".
-* **path** *Required* path name of the file which triggered the event. Example: "/src/architecture/lib/appland/local/client.rb".
-* **lineno** *Required* line number which triggered the event. Example: 5.
 * **thread_id** *Required* identifier of the execution thread. Example: 70340688724000.
 
 **Note**
@@ -313,6 +308,10 @@ In order to correlate function call events with function objects defined in the 
 
 Each "call" event has the following attributes:
 
+* **defined_class** *Required* name of the class which defines the method. Example: "MyApp::User".
+* **method_id** *Required* name of the function which was called in this event. Example: "show".
+* **path** *Required* path name of the file which triggered the event. Example: "/src/architecture/lib/appland/local/client.rb".
+* **lineno** *Required* line number which triggered the event. Example: 5.
 * **receiver** *Required* parameter object describing the object on which the function is called. Corresponds to the `receiver`, `self` and `this` concept found in various programming languages.
 * **parameters** *Required* array of parameter objects describing the function call parameters.
 * **static** *Required* flag if the method is class-scoped (static) or instance-scoped. Must be `true` or `false`. Example: true.
@@ -498,13 +497,10 @@ is a list of objects in [parameter object format](#parameter-object-format).
 
 # Changelog
 
-## v1.3
+## v1.2
 
 * Added `labels` to a `function` entry in the classmap.
 * Removed `static` from the common attributes for an `event`, added it to `call` events.
-
-## v1.2
-
 * `message` changed from a map to an array of parameter objects.
 * Added `labels`, `client`, and `recorder` to `metadata`.
 * Removed `layout`, `layout_owner` and `app_owner` from `metadata`.
