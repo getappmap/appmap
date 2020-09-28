@@ -359,7 +359,8 @@ See: HTTP Request-Line https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html
 A "return" event which represents an HTTP server response will have an `http_server_response` attribute, which is an
 object with the following elements:
 
-* **status** *Required* HTTP [status code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
+** *Required* HTTP [status code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
+** *Optional* HTTP [MIME type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)
 
 #### SQL query attributes
 
