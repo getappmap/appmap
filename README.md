@@ -406,11 +406,6 @@ is a list of objects in [parameter object format](#parameter-object-format).
   {
     "id": 2,
     "event": "return",
-    "defined_class": "AppLand::Local::Client",
-    "method_id": "install",
-    "path": "/src/architecture/lib/appland/local/client.rb",
-    "lineno": 7,
-    "thread_id": 70340688724000,
     "return_value": {
       "class": "Class",
       "value": "AppLand::Local::Client::Ruby",
@@ -444,11 +439,6 @@ is a list of objects in [parameter object format](#parameter-object-format).
   {
     "id": 4,
     "event": "return",
-    "defined_class": "AppLand::Local::UI::UI",
-    "method_id": "initialize",
-    "path": "/src/architecture/lib/appland/local/ui.rb",
-    "lineno": 41,
-    "thread_id": 70340688724000,
     "return_value": {
       "class": "NilClass",
       "value": null,
@@ -476,11 +466,6 @@ is a list of objects in [parameter object format](#parameter-object-format).
   {
     "id": 6,
     "event": "return",
-    "defined_class": "AppLand::Local::Client",
-    "method_id": "client",
-    "path": "/src/architecture/lib/appland/local/client.rb",
-    "lineno": 11,
-    "thread_id": 70340688724000,
     "exceptions": [
       {
         "class": "ClientValidationError",
