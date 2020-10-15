@@ -1,8 +1,5 @@
-- [About AppMap](#about-appmap)
-- [Usage](#usage)
-  - [AppMap client command reference](#appmap-client-command-reference)
-  - [Pruning](#pruning)
-- [appmap.json](#appmapjson)
+- [AppMap data specification](#appmap-data-specification)
+  - [File structure](#file-structure)
     - [version](#version)
     - [metadata](#metadata)
       - [Example](#example)
@@ -25,42 +22,18 @@
   - [v1.2](#v12)
   - [v1.1](#v11)
 
-# About AppMap
+# AppMap data specification
+The AppMap data specification outlines a standard JSON data format that contains
+detailed information of an application's runtime code execution, data snapshots
+and metadata. This data can be used to generate analytics and visualizations of
+code architecture and behavior.
 
-This is the home project for AppMap, automatic extraction of events and metadata from code. 
+This repository serves as the home project for the AppMap data specification. For
+more information on the AppMap framework, visit [appland.org](https://appland.org).
 
-# Usage
+## File structure
 
-Basic usage of AppMap proceeds according to the following steps:
-
-1. Install the AppMap client for the programming environment. For example, install the Ruby gem for Ruby
-   projects; install the npm package for Node.js; install the Go module for Golang.
-2. Run the AppMap client to perform static or dynamic inspection of the code. In static mode, the client inspects all
-   the project code without actually running any of it. In dynamic mode, the client executes the program through some
-   scenario, and records all the important events (e.g. SQL queries, function calls) which occur. Whether performing static or
-   dynamic inspection, the output is an `appmap.json` file.
-3. Upload the `appmap.json` file to the AppLand server.
-
-## AppMap client command reference
-
-Each AppMap client performs basically the same functions:
-
-* `appmap inspect` Perform a static inspection of the code and generate `appmap.json`.
-* `appmap record` Perform a dynamic inspection of the code by actually executing and observing the code. Generate
-  `appmap.json` on completion.
-* `appmap upload` Upload an `appmap.json` file(s) to the AppMap server.
-
-## Pruning
-
-When `appmap.json` is uploaded to the AppMap server, the file can be pruned to remove extraneous information.
-This results in a more compact and faster upload. For example, if a dynamic inspection was performed, then only the code
-which was actually executed at some point during the program execution may be retained.
-
-# appmap.json
-
-The file `appmap.json` contains metadata which is extracted from a code repo.  It is a JSON object with the following
-general structure:
-
+An AppMap file contains a single top level JSON object comprised of following:
 ```
 {
   "version": <integer>,
