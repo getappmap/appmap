@@ -20,6 +20,7 @@
       - [Message attributes](#message-attributes)
       - [Example](#example-2)
 - [Changelog](#changelog)
+  - [v1.3](#v13)
   - [v1.2](#v12)
   - [v1.1](#v11)
 
@@ -108,7 +109,7 @@ Metadata has the following attributes:
     "name": "appmap",
     "url": "https://github.com/applandinc/appmap-ruby",
     "version": "0.21.0"
-  },  
+  },
   "recorder": {
     "name": "rspec"
   },
@@ -127,7 +128,7 @@ Metadata has the following attributes:
 
 ### classMap
 
-*Required* list of code objects. There are three types of supported objects: `package`, `class`, and `function`. 
+*Required* list of code objects. There are three types of supported objects: `package`, `class`, and `function`.
 
 Note that the terms `package` and `class` are used loosely. In general, they encopass language-specific concepts such as
 `directory`, `package`, `class`, `interface`, `module`, etc. Since an AppMap is a high-level representation of code, the
@@ -157,6 +158,14 @@ Each "function" has the following attributes:
 * **location** *Required* File path and line number, separated by a colon. Example: "/Users/alice/src/myapp/lib/myapp/main.rb:5".
 * **static** *Required* flag if the method is class-scoped (static) or instance-scoped. Must be `true` or `false`. Example: true.
 * **labels** *Optional* list of arbitrary labels describing the function.
+* **comment** *Optional* documentation comment for the function extracted from the source code.
+* **source** *Optional* verbatim source code of the function.
+
+Note if recording several appmaps from the same code base **comment** and
+**source** can become widely redundant and contain duplicated data between the
+maps. For this reason it might be more convenient to omit them in specific
+AppMaps even if available, and instead create a separate AppMap with no
+events and just a classmap containing all code encountered in these recordings.
 
 #### Example
 
@@ -455,6 +464,10 @@ is a list of objects in [parameter object format](#parameter-object-format).
 ```
 
 # Changelog
+
+## v1.3
+
+* Added `comment` and `source` to a `function` entry in the classmap.
 
 ## v1.2
 
