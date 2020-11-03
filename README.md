@@ -34,7 +34,7 @@ more information on the AppMap framework, visit [appland.org](https://appland.or
 
 ## File structure
 
-An AppMap file contains a single top level JSON object comprised of following:
+An AppMap file contains a single top level JSON object comprised of the following:
 ```
 {
   "version": <integer>,
@@ -58,10 +58,10 @@ Metadata has the following attributes:
 
 * **name** *Optional* scenario name.
 * **labels** *Optional* list of arbitrary labels describing the AppMap.
-* **app** *Optional* name of the app to assign to the Scenario. The organization to which the app belongs may be specified by separating the organization name and app name by a forward slash `/`. If no organization name is specified, the data is loaded into the user's personal data set. Example of a scoped name: `myorg/myapp`. Example of an unscoped name: `myapp`. The forward-slash character is illegal in app names and org names.
-* **feature** *Optional* name of the feature to associate with the Scenario. If the named feature does not exist, it may
+* **app** *Optional* name of the app to assign to the scenario. The organization to which the app belongs may be specified by separating the organization name and app name by a forward slash `/`. If no organization name is specified, the data is loaded into the user's personal data set. Example of a scoped name: `myorg/myapp`. Example of an unscoped name: `myapp`. The forward-slash character is illegal in app names and org names.
+* **feature** *Optional* name of the feature to associate with the scenario. If the named feature does not exist, it may
   be created.
-* **feature_group** *Optional* name of the feature group to associate with the Scenario. If the named feature group does not exist, it may
+* **feature_group** *Optional* name of the feature group to associate with the scenario. If the named feature group does not exist, it may
   be created.
 * **language** *Optional* information about the programming language in which code is written.
   * **name** *Required* name of the programming language
@@ -70,7 +70,7 @@ Metadata has the following attributes:
 * **frameworks** *Optional* list of frameworks which the code uses.
   * **name** *Required* name of the framework.
   * **version** *Required* version of the framework.
-* **client** *Required* information about the AppMap client which recorded the scenario.
+* **client** *Required* information about the AppLand client which recorded the scenario.
   * **name** *Required* short name of the client.
   * **url** *Required* unique URL of the client.
   * **version** *Optional* version of the client.
@@ -108,7 +108,7 @@ Metadata has the following attributes:
     "name": "appmap",
     "url": "https://github.com/applandinc/appmap-ruby",
     "version": "0.21.0"
-  },  
+  },
   "recorder": {
     "name": "rspec"
   },
@@ -127,7 +127,7 @@ Metadata has the following attributes:
 
 ### classMap
 
-*Required* list of code objects. There are three types of supported objects: `package`, `class`, and `function`. 
+*Required* list of code objects. There are three types of supported objects: `package`, `class`, and `function`.
 
 Note that the terms `package` and `class` are used loosely. In general, they encopass language-specific concepts such as
 `directory`, `package`, `class`, `interface`, `module`, etc. Since an AppMap is a high-level representation of code, the
