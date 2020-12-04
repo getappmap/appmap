@@ -20,6 +20,7 @@
       - [Message attributes](#message-attributes)
       - [Example](#example-2)
 - [Changelog](#changelog)
+  - [v1.4](#v14)
   - [v1.3](#v13)
   - [v1.2](#v12)
   - [v1.1](#v11)
@@ -331,7 +332,8 @@ A "call" event which represents an HTTP server request will have an `http_server
 object with the following elements:
 
 * **request_method** *Required* HTTP request method. Example: "POST".
-* **path_info** *Required* HTTP request path. Example: "/users".
+* **path_info** *Required* HTTP request path. Example: "/orders/84".
+* **normalized_path_info** *Optional* Parameterized request path. Example: "/orders/:id".
 * **protocol** *Optional* HTTP protocol and version. Example: "HTTP/1.1", "http://".
 
 See: HTTP Request-Line https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html
@@ -464,6 +466,10 @@ is a list of objects in [parameter object format](#parameter-object-format).
 ```
 
 # Changelog
+
+## v1.4
+
+* Added `normalized_path_info` to HTTP server request object.
 
 ## v1.3
 
