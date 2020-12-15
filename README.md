@@ -374,7 +374,7 @@ is a list of objects in [parameter object format](#parameter-object-format).
     "lineno": 5,
     "static": true,
     "thread_id": 70340688724000,
-    "self": {
+    "receiver": {
       "class": "Module",
       "value": "AppLand::Local::Client",
       "object_id": 70340693307040
@@ -407,7 +407,7 @@ is a list of objects in [parameter object format](#parameter-object-format).
     "lineno": 39,
     "static": false,
     "thread_id": 70340688724000,
-    "self": {
+    "receiver": {
       "class": "AppLand::Local::UI::UI",
       "value": "#<struct AppLand::Local::UI::UI visualizations=nil>",
       "object_id": 70340689072680
@@ -440,7 +440,7 @@ is a list of objects in [parameter object format](#parameter-object-format).
     "lineno": 9,
     "static": true,
     "thread_id": 70340688724000,
-    "self": {
+    "receiver": {
       "class": "Module",
       "value": "AppLand::Local::Client",
       "object_id": 70340693307040
