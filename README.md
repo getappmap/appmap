@@ -96,7 +96,6 @@ Metadata has the following attributes:
 ```
 {
   "name": "Identity management in the UI permits login with a local password",
-  "repository": "https://github.com/applandinc/appmap",
   "labels": [ "documentation" ],
   "app": "Discourse",
   "feature": "Login with valid locally managed credentials",
@@ -115,6 +114,7 @@ Metadata has the following attributes:
     "name": "rspec"
   },
   "git": {
+    "repository": "https://github.com/applandinc/appmap",
     "branch": "master",
     "commit": "c3424f9",
     "status": [
