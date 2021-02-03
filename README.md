@@ -375,17 +375,17 @@ is a list of objects in [parameter object format](#parameter-object-format).
     "static": true,
     "thread_id": 70340688724000,
     "receiver": {
+      "name": "self"
       "class": "Module",
       "value": "AppLand::Local::Client",
       "object_id": 70340693307040
     },
-    "parameters": {
-      "name": {
-        "class": "String",
-        "value": "ruby",
-        "object_id": 70340689027780
-      }
-    }
+    "parameters": [
+      "name": "name"
+      "class": "String",
+      "value": "ruby",
+      "object_id": 70340689027780
+    ]
   },
   {
     "id": 2,
@@ -408,16 +408,17 @@ is a list of objects in [parameter object format](#parameter-object-format).
     "static": false,
     "thread_id": 70340688724000,
     "receiver": {
+      "name": "self"
       "class": "AppLand::Local::UI::UI",
       "value": "#<struct AppLand::Local::UI::UI visualizations=nil>",
       "object_id": 70340689072680
     },
-    "parameters": {
-      "visualizations": {
-        "class": "Array",
-        "value": "[AppLand::Local::UI::Component::Timeline, AppLand::Local::UI::Component::CallStack, AppLand::Local::",
-        "object_id": 70340693502240
-      }
+    "parameters": [
+      "name": "visualizations"
+      "class": "Array",
+      "value": "[AppLand::Local::UI::Component::Timeline, AppLand::Local::UI::Component::CallStack, AppLand::Local::",
+      "object_id": 70340693502240
+    ]
     }
   },
   {
@@ -441,11 +442,12 @@ is a list of objects in [parameter object format](#parameter-object-format).
     "static": true,
     "thread_id": 70340688724000,
     "receiver": {
+      "name": "self"
       "class": "Module",
       "value": "AppLand::Local::Client",
       "object_id": 70340693307040
     },
-    "parameters": {}
+    "parameters": []
   },
   {
     "id": 6,
