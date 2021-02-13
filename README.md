@@ -156,7 +156,7 @@ Each "package" and "class" has the following attributes:
 
 Each "function" has the following attributes:
 
-* **location** *Required* File path and line number, separated by a colon. Example: "/Users/alice/src/myapp/lib/myapp/main.rb:5".
+* **location** *Recommended* File path and line number, separated by a colon. Example: "/Users/alice/src/myapp/lib/myapp/main.rb:5".
 * **static** *Required* flag if the method is class-scoped (static) or instance-scoped. Must be `true` or `false`. Example: true.
 * **labels** *Optional* list of arbitrary labels describing the function.
 * **comment** *Optional* documentation comment for the function extracted from the source code.
@@ -296,8 +296,8 @@ A "call" event which represents a function call has the following attributes:
 
 * **defined_class** *Required* name of the class which defines the method. Example: "MyApp::User".
 * **method_id** *Required* name of the function which was called in this event. Example: "show".
-* **path** *Required* path name of the file which triggered the event. Example: "/src/architecture/lib/appland/local/client.rb".
-* **lineno** *Required* line number which triggered the event. Example: 5.
+* **path** *Recommended* path name of the file which triggered the event. Example: "/src/architecture/lib/appland/local/client.rb".
+* **lineno** *Recommended* line number which triggered the event. Example: 5.
 * **receiver** *Required* parameter object describing the object on which the function is called. Corresponds to the `receiver`, `self` and `this` concept found in various programming languages.
 * **parameters** *Required* array of parameter objects describing the function call parameters.
 * **static** *Required* flag if the method is class-scoped (static) or instance-scoped. Must be `true` or `false`. Example: true.
@@ -475,6 +475,10 @@ is a list of objects in [parameter object format](#parameter-object-format). `me
 ```
 
 # Changelog
+
+## v1.4.1
+
+* Make source location optional; it's not always possible to provide it but appmaps lacking it can still be useful.
 
 ## v1.4
 
