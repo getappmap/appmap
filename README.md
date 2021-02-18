@@ -282,14 +282,17 @@ Each event object has the following attributes:
 * **event** *Required* event type. Must be "call" or "return".
 * **thread_id** *Required* identifier of the execution thread. Example: 70340688724000.
 
-**Note**
+#### Common `return` attributes
 
-In order to correlate function call events with function objects defined in the class map, the `path` and
-`lineno` attributes of each "call" event should exactly match the `location` attribute of the corresponding function.
+Each "return" event has the following attributes:
 
-#### Function call attributes
+* **parent_id** *Required* id of the "call" event corresponding to this "return".
+* **elapsed** *Optional* elapsed time in seconds of this function call.
 
-Each "call" event has the following attributes:
+
+#### Function `call` attributes
+
+A "call" event which represents a function call has the following attributes:
 
 * **defined_class** *Required* name of the class which defines the method. Example: "MyApp::User".
 * **method_id** *Required* name of the function which was called in this event. Example: "show".
@@ -298,6 +301,11 @@ Each "call" event has the following attributes:
 * **receiver** *Required* parameter object describing the object on which the function is called. Corresponds to the `receiver`, `self` and `this` concept found in various programming languages.
 * **parameters** *Required* array of parameter objects describing the function call parameters.
 * **static** *Required* flag if the method is class-scoped (static) or instance-scoped. Must be `true` or `false`. Example: true.
+
+**Note**
+
+In order to correlate function call events with function objects defined in the class map, the `path` and
+`lineno` attributes of each "call" event should exactly match the `location` attribute of the corresponding `function` in the `classMap`.
 
 #### Parameter object format
 
@@ -317,16 +325,14 @@ Each parameter is an object containing the following attributes:
 * **path** *Optional* path name of the file where the exception was thrown. Example: "/src/main/java/com/myorg/models/User.java".
 * **lineno** *Optional* line number where the exception was thrown. Example: 264.
 
-#### Function return attributes
+#### Function `return` attributes
 
-Each "return" event has the following attributes:
+A "return" event which represents a function call has the following attributes:
 
-* **parent_id** *Required* id of the "call" event corresponding to this "return".
 * **return_value** *Optional* object describing the return value. If present, this value uses [parameter object format](#parameter-object-format).
-* **elapsed** *Optional* elapsed time in seconds of this function call.
 * **exceptions** *Optional* array of exceptions causing this method to exit. If present, this value uses [exception object format](#exception-object-format). When an exception is a wrapper for an underlying `cause`, the cause is the next exception in the `exceptions` array.
 
-#### HTTP server request attributes
+#### HTTP server request `call` attributes
 
 A "call" event which represents an HTTP server request will have an `http_server_request` attribute, which is an
 object with the following elements:
@@ -338,7 +344,7 @@ object with the following elements:
 
 See: HTTP Request-Line https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html
 
-#### HTTP server response attributes
+#### HTTP server request `return` attributes
 
 A "return" event which represents an HTTP server response will have an `http_server_response` attribute, which is an
 object with the following elements:
@@ -346,7 +352,7 @@ object with the following elements:
 * **status_code** *Required* HTTP [status code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
 * **mime_type** *Optional* HTTP [MIME type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)
 
-#### SQL query attributes
+#### SQL query `call` attributes
 
 A "call" event which represents a SQL query will have an `sql_query` attribute, which is an
 object with the following elements:
@@ -356,10 +362,11 @@ object with the following elements:
 * **explain_sql** *Optional* query plan provided by the database engine.
 * **server_version** *Optional* database server version.
 
-#### Message attributes
+#### Message `call` attributes
 
 A "call" event which represents the receipt of a message will have a `message` attribute, which
-is a list of objects in [parameter object format](#parameter-object-format).
+is a list of objects in [parameter object format](#parameter-object-format). `message` is also used in 
+`http_server_request` to indicate parameters.
 
 #### Example
 
@@ -472,6 +479,7 @@ is a list of objects in [parameter object format](#parameter-object-format).
 ## v1.4
 
 * Added `normalized_path_info` to HTTP server request object.
+* Clarify required attributes for function `call` events, as compared to common attributes for all `call` events.
 
 ## v1.3
 
