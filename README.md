@@ -39,7 +39,7 @@ more information on the AppMap framework, visit [appland.org](https://appland.or
 An AppMap file contains a single top level JSON object comprised of the following:
 ```
 {
-  "version": <integer>,
+  "version": <string>,
   "metadata": <object>,
   "classMap": [ <tree of package, class, and function objects> ],
   "events": [ <list of event objects> ]
@@ -48,7 +48,7 @@ An AppMap file contains a single top level JSON object comprised of the followin
 
 ### version
 
-*Required* version number to which the file conforms.
+*Required* version number to which the file conforms, such as: `"1.4"`.
 
 See the [Changelog](#changelog) section for version history.
 
