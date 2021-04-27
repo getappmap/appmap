@@ -20,12 +20,14 @@
       - [Message attributes](#message-attributes)
       - [Example](#example-2)
 - [Changelog](#changelog)
+  - [v1.4.1](#v141)
   - [v1.4](#v14)
   - [v1.3](#v13)
   - [v1.2](#v12)
   - [v1.1](#v11)
 
 # AppMap data specification
+
 The AppMap data specification outlines a standard JSON data format that contains
 detailed information of an application's runtime code execution, data snapshots
 and metadata. This data can be used to generate analytics and visualizations of
@@ -295,8 +297,8 @@ Each "call" event has the following attributes:
 * **method_id** *Required* name of the function which was called in this event. Example: "show".
 * **path** *Recommended* path name of the file which triggered the event. Example: "/src/architecture/lib/appland/local/client.rb".
 * **lineno** *Recommended* line number which triggered the event. Example: 5.
-* **receiver** *Required* parameter object describing the object on which the function is called. Corresponds to the `receiver`, `self` and `this` concept found in various programming languages.
-* **parameters** *Required* array of parameter objects describing the function call parameters.
+* **receiver** *Optional* parameter object describing the object on which the function is called. Corresponds to the `receiver`, `self` and `this` concept found in various programming languages.
+* **parameters** *Recommended* array of parameter objects describing the function call parameters.
 * **static** *Required* flag if the method is class-scoped (static) or instance-scoped. Must be `true` or `false`. Example: true.
 
 #### Parameter object format
@@ -472,6 +474,8 @@ is a list of objects in [parameter object format](#parameter-object-format).
 ## v1.4.1
 
 * Make source location optional; it's not always possible to provide it but appmaps lacking it can still be useful.
+* Make receiver and parameters optional; they not always make sense and there could be performance
+  or operational reasons to skip capture.
 
 ## v1.4
 
