@@ -343,6 +343,9 @@ A "return" event which represents a function call has the following attributes:
 A "call" event which represents an HTTP server request will have an `http_server_request` attribute, which is an
 object with the following elements:
 
+* **headers** *Recommended* an object representing HTTP headers/
+* **authorization** *Optional* contents of the `Authorization` header.
+* **mime_type** *Optional* `Content-Type` header.
 * **request_method** *Required* HTTP request method. Example: "POST".
 * **path_info** *Required* HTTP request path. Example: "/orders/84".
 * **normalized_path_info** *Optional* Parameterized request path. When present, each parameter must be surrounded by `{}`. Example: "/orders/{id}".
@@ -374,6 +377,7 @@ object with the following elements:
 A `return` event which represents an HTTP client response will have an `http_client_response` attribute, which is an
 object with the following elements:
 
+* **headers** *Recommended* an object representing HTTP headers of the response.
 * **status_code** *Required* HTTP [status code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
 * **mime_type** *Optional* HTTP [MIME type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)
 
@@ -503,6 +507,7 @@ is a list of objects in [parameter object format](#parameter-object-format). `me
 ## Unreleased
 
 * Add optional `test_status` and `exception` fields in metadata for conveying the test status.
+* Add HTTP request and response headers, as implemented by appmap-ruby.
 
 ## v1.5.1
 
