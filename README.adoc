@@ -1,0 +1,483 @@
+:toc:
+:toclevels: 3
+
+= AppMap data specification
+
+The AppMap data specification outlines a standard JSON data format that contains
+detailed information of an application's runtime code execution, data snapshots
+and metadata. This data can be used to generate analytics and visualizations of
+code architecture and behavior.
+
+This repository serves as the home project for the AppMap data specification. For
+more information on the AppMap framework, visit https://appland.org[appland.org].
+
+== File structure
+
+An AppMap file contains a single top level JSON object comprised of the following:
+
+[source,json]
+{
+  "version": <string>,
+  "metadata": <object>,
+  "classMap": [ <tree of package, class, and function objects> ],
+  "events": [ <list of event objects> ]
+}
+
+=== `version`
+
+_Required_ version number to which the file conforms, such as: `"1.4"`.
+
+See the xref:changelog[Changelog] section for version history.
+
+=== `metadata`
+
+_Optional_ information about the code from which the AppMap was extracted.
+
+Metadata has the following attributes:
+
+* *name* _Optional_ scenario name.
+* *labels* _Optional_ list of arbitrary labels describing the AppMap.
+* *app* _Optional_ name of the app to assign to the scenario. The organization to which the app belongs may be specified by separating the organization name and app name by a forward slash `/`. If no organization name is specified, the data is loaded into the user's personal data set. Example of a scoped name: `myorg/myapp`. Example of an unscoped name: `myapp`. The forward-slash character is illegal in app names and org names.
+* *feature* _Optional_ name of the feature to associate with the scenario. If the named feature does not exist, it may
+  be created.
+* *feature_group* _Optional_ name of the feature group to associate with the scenario. If the named feature group does not exist, it may
+  be created.
+* *language* _Optional_ information about the programming language in which code is written.
+** *name* _Required_ name of the programming language
+** *engine* _Optional_ name of the programming langugae engine, e.g. VM variant.
+** *version* _Required_ programming language version
+* *frameworks* _Optional_ list of frameworks which the code uses.
+** *name* _Required_ name of the framework.
+** *version* _Required_ version of the framework.
+* *client* _Required_ information about the AppLand client which recorded the scenario.
+** *name* _Required_ short name of the client.
+** *url* _Required_ unique URL of the client.
+** *version* _Optional_ version of the client.
+* *recorder* _Required_ information about the method which was used by the client to record the scenario.
+** *name* _Required_ name of the recording method. This name must be unique to the client, but need not be unique across different clients.
+* *recording* _Optional_ information about the entry-point function which was recorded.
+** *defined_class* _Required_ name of the class which defines the entry-point function.
+** *method_id* _Required_ name of the recorded function.
+* *git* _Optional_ information about the state of the Git repo.
+** *repository* _Required_ repository URL.
+** *branch* _Required_ code branch.
+** *commit* _Required_ commit identifier.
+** *status* _Required_ status of the repo relative to the commit, represented as a list of status messages. If the repo is clean, the status should be an empty list.
+** *tag* _Optional_ latest tag.
+** *annotated_tag* _Optional_ latest annotated tag.
+** *commits_since_tag* _Optional_ number of commits since the last tag.
+** *commits_since_annotated_tag* _Optional_ number of commits since the last annotated tag.
+
+.`metadata` object
+====
+[source,json]
+{
+  "name": "Identity management in the UI permits login with a local password",
+  "labels": [ "documentation" ],
+  "app": "Discourse",
+  "feature": "Login with valid locally managed credentials",
+  "feature_group": "Authentication",
+  "language": {
+    "name": "ruby",
+    "engine": "ruby",
+    "version": "2.6.2"
+  },
+  "client": {
+    "name": "appmap",
+    "url": "https://github.com/applandinc/appmap-ruby",
+    "version": "0.21.0"
+  },
+  "recorder": {
+    "name": "rspec"
+  },
+  "git": {
+    "repository": "https://github.com/applandinc/appmap",
+    "branch": "master",
+    "commit": "c3424f9",
+    "status": [
+      "M spec/system/feature_spec.rb",
+      "M spec/system/user_spec.rb"
+    ],
+    "annotated_tag": "v1.1.0",
+    "commits_since_annotated_tag": "3"
+  }
+}
+====
+
+=== `classMap`
+
+_Required_ list of code objects. There are three types of supported objects: `package`, `class`, and `function`.
+
+Note that the terms `package` and `class` are used loosely. In general, they encopass language-specific concepts such as
+`directory`, `package`, `class`, `interface`, `module`, etc. Since an AppMap is a high-level representation of code, the
+detailed differences between these language-specific concepts aren't usually very important. Rules of thumb:
+
+* Use a `package` for each directory which contains code. A package may contain classes, but not functions.
+* Use a `class` for each type declaration in a code file. A class may contain classes and functions, but not packages.
+
+==== Common attributes
+
+Each `classMap` object has the following attributes:
+
+* *name* _Required_ name. Should be the local name of the object, not the fully-scoped name. Example: `"User"` or
+  `"show"`, not `"MyApp::User"` or `"User#show"`.
+* *type* _Required_ object type. Must be `"package"`, `"class"`, or `"function"`.
+
+==== package and class attributes
+
+Each `package` and `class` has the following attributes:
+
+* *children* _Optional_ List of child objects which are semantically contained.
+
+==== function attributes
+
+Each `function` has the following attributes:
+
+* *location* _Recommended_ File path and line number, separated by a colon. Example: `"/Users/alice/src/myapp/lib/myapp/main.rb:5"`.
+* *static* _Required_ flag if the method is class-scoped (static) or instance-scoped. Must be `true` or `false`. Example: true.
+* *labels* _Optional_ list of arbitrary labels describing the function.
+* *comment* _Optional_ documentation comment for the function extracted from the source code.
+* *source* _Optional_ verbatim source code of the function.
+
+Note if recording several appmaps from the same code base *comment* and
+*source* can become widely redundant and contain duplicated data between the
+maps. For this reason it might be more convenient to omit them in specific
+AppMaps even if available, and instead create a separate AppMap with no
+events and just a classmap containing all code encountered in these recordings.
+
+.`classMap` object
+====
+[source,json]
+[
+  {
+    "name": "appland",
+    "type": "package",
+    "children": [
+      {
+        "name": "AppLand",
+        "type": "class",
+        "children": [
+          {
+            "name": "Server",
+            "type": "class",
+            "children": [
+              {
+                "name": "API",
+                "type": "class",
+                "children": [
+                  {
+                    "name": "upload",
+                    "location": "/src/architecture/lib/appland/server/api.rb:7",
+                    "type": "function",
+                    "static": false
+                  }
+                ]
+              },
+              {
+                "name": "Model",
+                "type": "class",
+                "children": [
+                  {
+                    "name": "User",
+                    "location": "/src/architecture/lib/appland/server/model.rb:5",
+                    "type": "class",
+                    "children": [
+                      {
+                        "name": "create",
+                        "location": "/src/architecture/lib/appland/server/model.rb:6",
+                        "type": "function",
+                        "static": true
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Scenario",
+                    "type": "class",
+                    "children": [
+                      {
+                        "name": "create",
+                        "location": "/src/architecture/lib/appland/server/model.rb:11",
+                        "type": "function",
+                        "static": true
+                      },
+                      {
+                        "name": "review",
+                        "location": "/src/architecture/lib/appland/server/model.rb:13",
+                        "type": "function",
+                        "static": false
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "active_support",
+    "type": "package",
+    "children": [
+      {
+        "name": "ActiveSupport",
+        "type": "class",
+        "children": [
+          {
+            "name": "SecurityUtils",
+            "type": "class",
+            "children": [
+              {
+                "name": "secure_compare",
+                "type": "function",
+                "location": "/Users/ajp/.rbenv/versions/2.6.2/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.2/lib/active_support/security_utils.rb:26",
+                "static": true,
+                "labels": [
+                  "security"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
+====
+
+=== `events`
+
+_Optional_ list of events which were recorded during program execution. Each object in this list is either a function call or a
+return from a function call which occurred during an actual program execution.
+
+==== Common attributes
+
+Each event object has the following attributes:
+
+* *id* _Required_ unique identifier. Example: `23522`.
+* *event* _Required_ event type. Must be `"call"` or `"return"`.
+* *thread_id* _Required_ identifier of the execution thread. Example: `70340688724000`.
+
+==== Common `return` attributes
+
+Each `return` event has the following attributes:
+
+* *parent_id* _Required_ id of the `call` event corresponding to this `return`.
+* *elapsed* _Optional_ elapsed time in seconds of this function call.
+
+
+==== Function `call` attributes
+
+A `call` event which represents a function call has the following attributes:
+
+* *defined_class* _Required_ name of the class which defines the method. Example: `"MyApp::User"`.
+* *method_id* _Required_ name of the function which was called in this event. Example: `"show"`.
+* *path* _Recommended_ path name of the file which triggered the event. Example: `"/src/architecture/lib/appland/local/client.rb"`.
+* *lineno* _Recommended_ line number which triggered the event. Example: `5`.
+* *receiver* _Optional_ parameter object describing the object on which the function is called. Corresponds to the _receiver_, _self_ and _this_ concept found in various programming languages.
+* *parameters* _Recommended_ array of parameter objects describing the function call parameters.
+* *static* _Required_ flag if the method is class-scoped (static) or instance-scoped. Must be `true` or `false`. Example: `true`.
+
+[NOTE]
+In order to correlate function call events with function objects defined in the class map, the `path` and
+`lineno` attributes of each "call" event should exactly match the `location` attribute of the corresponding `function` in the `classMap`.
+
+==== Parameter object format
+[[parameter-object-format]]
+
+Each parameter is an object containing the following attributes:
+
+* *name* _Required_ name of the parameter. Example: `"login"`.
+* *object_id* _Required_ unique id of the object. Example: `70340693307040`.
+* *class* _Required_ fully qualified class name of the object. Example: `"MyApp::User"`.
+* *value* _Required_ string describing the object. This is not a strict JSON serialization, but rather a display
+  string which is intended for the user. These strings should be trimmed in length to 100 characters. Example: `"MyApp
+  user 'alice'"`.
+
+==== Exception object format
+[[exception-object-format]]
+
+* *class* _Required_ fully qualified class name of the exception. Example: `"com.myorg.InvalidUserException"`.
+* *message* _Required_ description of the exception cause. Example: `"User attribute not defined: 'email'"`.
+* *object_id* _Required_ unique id of the object. Example: `70340693307040`.
+* *path* _Optional_ path name of the file where the exception was thrown. Example: `"/src/main/java/com/myorg/models/User.java"`.
+* *lineno* _Optional_ line number where the exception was thrown. Example: `264`.
+
+==== Function `return` attributes
+
+A `return` event which represents a function return has the following attributes:
+
+* *return_value* _Optional_ object describing the return value. If present, this value uses xref:parameter-object-format[parameter object format].
+* *exceptions* _Optional_ array of exceptions causing this method to exit. If present, this value uses xref:exception-object-format[exception object format]. When an exception is a wrapper for an underlying _cause_, the cause is the next exception in the `exceptions` array.
+
+==== HTTP server request `call` attributes
+
+A `call` event which represents an HTTP server request will have an `http_server_request` attribute, which is an
+object with the following elements:
+
+* *request_method* _Required_ HTTP request method. Example: `"POST"`.
+* *path_info* _Required_ HTTP request path. Example: `"/orders/84"`.
+* *normalized_path_info* _Optional_ Parameterized request path. Example: `"/orders/:id"`.
+* *protocol* _Optional_ HTTP protocol and version. Example: `"HTTP/1.1"`.
+
+See: HTTP Request-Line https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html
+
+==== HTTP server request `return` attributes
+
+A `return` event which represents an HTTP server response will have an `http_server_response` attribute, which is an
+object with the following elements:
+
+* *status_code* _Required_ HTTP https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html[status code]
+* *mime_type* _Optional_ HTTP https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types[MIME type]
+
+==== SQL query `call` attributes
+
+A `call` event which represents a SQL query will have an `sql_query` attribute, which is an
+object with the following elements:
+
+* *database_type* _Required_ name of the database. Example: `"postgresql"`.
+* *sql* _Required_ SQL query string.
+* *explain_sql* _Optional_ query plan provided by the database engine.
+* *server_version* _Optional_ database server version.
+
+==== Message `call` attributes
+
+A `call` event which represents the receipt of a message will have a `message` attribute, which
+is a list of objects in xref:parameter-object-format[parameter object format]. `message` is also used in
+`http_server_request` to indicate parameters.
+
+.`events` object
+====
+[source,json]
+[
+  {
+    "id": 1,
+    "event": "call",
+    "defined_class": "AppLand::Local::Client",
+    "method_id": "install",
+    "path": "/src/architecture/lib/appland/local/client.rb",
+    "lineno": 5,
+    "static": true,
+    "thread_id": 70340688724000,
+    "receiver": {
+      "name": "self",
+      "class": "Module",
+      "value": "AppLand::Local::Client",
+      "object_id": 70340693307040
+    },
+    "parameters": [
+      {
+        "name": "name",
+        "class": "String",
+        "value": "ruby",
+        "object_id": 70340689027780
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "event": "return",
+    "return_value": {
+      "class": "Class",
+      "value": "AppLand::Local::Client::Ruby",
+      "object_id": 70340693343340
+    },
+    "parent_id": 1,
+    "elapsed": 7.2e-05
+  },
+  {
+    "id": 3,
+    "event": "call",
+    "defined_class": "AppLand::Local::UI::UI",
+    "method_id": "initialize",
+    "path": "/src/architecture/lib/appland/local/ui.rb",
+    "lineno": 39,
+    "static": false,
+    "thread_id": 70340688724000,
+    "receiver": {
+      "name": "self",
+      "class": "AppLand::Local::UI::UI",
+      "value": "#<struct AppLand::Local::UI::UI visualizations=nil>",
+      "object_id": 70340689072680
+    },
+    "parameters": [
+      {
+        "name": "visualizations",
+        "class": "Array",
+        "value": "[AppLand::Local::UI::Component::Timeline, AppLand::Local::UI::Component::CallStack, AppLand::Local::",
+        "object_id": 70340693502240
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "event": "return",
+    "return_value": {
+      "class": "NilClass",
+      "value": null,
+      "object_id": 8
+    },
+    "parent_id": 3,
+    "elapsed": 3.0e-06
+  },
+  {
+    "id": 5,
+    "event": "call",
+    "defined_class": "AppLand::Local::Client",
+    "method_id": "client",
+    "path": "/src/architecture/lib/appland/local/client.rb",
+    "lineno": 9,
+    "static": true,
+    "thread_id": 70340688724000,
+    "receiver": {
+      "name": "self",
+      "class": "Module",
+      "value": "AppLand::Local::Client",
+      "object_id": 70340693307040
+    },
+    "parameters": []
+  },
+  {
+    "id": 6,
+    "event": "return",
+    "exceptions": [
+      {
+        "class": "ClientValidationError",
+        "message": "The client failed validation",
+        "path": "/src/architecture/lib/appland/local/client.rb",
+        "lineno": 8,
+        "object_id": 70340693343340
+      }
+    ],
+    "parent_id": 5,
+    "elapsed": 2.0e-06
+  }
+]
+====
+
+== Changelog
+[[changelog]]
+
+v1.4.1::
+* Make source location optional; it's not always possible to provide it but appmaps lacking it can still be useful.
+* Make receiver and parameters optional; they not always make sense and there could be performance
+  or operational reasons to skip capture.
+
+v1.4::
+* Added `normalized_path_info` to HTTP server request object.
+* Clarify required attributes for function `call` events, as compared to common attributes for all `call` events.
+
+v1.3::
+* Added `comment` and `source` to a `function` entry in the classmap.
+
+v1.2::
+* Added `labels` to a `function` entry in the classmap.
+* Moved `static`, `defined_class`, `method_id`, `path`, `lineno` from `event` common attributes to `call`-only events.
+* `message` changed from a map to an array of parameter objects.
+* Added `labels`, `client`, and `recorder` to `metadata`.
+* Removed `layout`, `layout_owner` and `app_owner` from `metadata`.
+
+v1.1::
+* `parameters` changed from a map to an array of parameter objects.
+* Added `receiver`, a parameter object.
