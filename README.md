@@ -67,10 +67,6 @@ Metadata has the following attributes:
 * **name** *Optional* scenario name.
 * **labels** *Optional* list of arbitrary labels describing the AppMap.
 * **app** *Optional* name of the app to assign to the scenario. The organization to which the app belongs may be specified by separating the organization name and app name by a forward slash `/`. If no organization name is specified, the data is loaded into the user's personal data set. Example of a scoped name: `myorg/myapp`. Example of an unscoped name: `myapp`. The forward-slash character is illegal in app names and org names.
-* **feature** *Optional* name of the feature to associate with the scenario. If the named feature does not exist, it may
-  be created.
-* **feature_group** *Optional* name of the feature group to associate with the scenario. If the named feature group does not exist, it may
-  be created.
 * **language** *Optional* information about the programming language in which code is written.
   * **name** *Required* name of the programming language
   * **engine** *Optional* name of the programming langugae engine, e.g. VM variant.
@@ -96,6 +92,10 @@ Metadata has the following attributes:
   * **annotated_tag** *Optional* latest annotated tag.
   * **commits_since_tag** *Optional* number of commits since the last tag.
   * **commits_since_annotated_tag** *Optional* number of commits since the last annotated tag.
+* **test_status** *Optional* status of the test that ran to generate the AppMap. Valid values are `succeeded` or `failed`.
+* **exception** *Optional* unhandled exception which occurred during scenairo processing.
+  * **class** *Required* exception class name.
+  * **message** *Optional* exception message.
 
 #### Example
 
@@ -500,10 +500,14 @@ is a list of objects in [parameter object format](#parameter-object-format). `me
 ```
 
 # Changelog
+## Unreleased
+
+* Add optional `test_status` and `exception` fields in metadata for conveying the test status.
+
 ## v1.5.1
 
 * Specify format for parameters in `normalized_path_info`.
-* 
+
 ## v1.5.0
 
 * Added `http_client_request` and `http_client_response`.
