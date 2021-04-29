@@ -10,16 +10,20 @@
       - [Example](#example-1)
     - [events](#events)
       - [Common attributes](#common-attributes-1)
-      - [Function call attributes](#function-call-attributes)
+      - [Common `return` attributes](#common-return-attributes)
+      - [Function `call` attributes](#function-call-attributes)
       - [Parameter object format](#parameter-object-format)
       - [Exception object format](#exception-object-format)
-      - [Function return attributes](#function-return-attributes)
-      - [HTTP server request attributes](#http-server-request-attributes)
-      - [HTTP server response attributes](#http-server-response-attributes)
-      - [SQL query attributes](#sql-query-attributes)
-      - [Message attributes](#message-attributes)
+      - [Function `return` attributes](#function-return-attributes)
+      - [HTTP server request `call` attributes](#http-server-request-call-attributes)
+      - [HTTP client request `call` attributes](#http-client-request-call-attributes)
+      - [HTTP server request `return` attributes](#http-server-request-return-attributes)
+      - [HTTP client response `return` attributes](#http-client-response-return-attributes)
+      - [SQL query `call` attributes](#sql-query-call-attributes)
+      - [Message `call` attributes](#message-call-attributes)
       - [Example](#example-2)
 - [Changelog](#changelog)
+  - [Unreleased](#unreleased)
   - [v1.4.1](#v141)
   - [v1.4](#v14)
   - [v1.3](#v13)
@@ -342,13 +346,30 @@ object with the following elements:
 * **request_method** *Required* HTTP request method. Example: "POST".
 * **path_info** *Required* HTTP request path. Example: "/orders/84".
 * **normalized_path_info** *Optional* Parameterized request path. Example: "/orders/:id".
-* **protocol** *Optional* HTTP protocol and version. Example: "HTTP/1.1", "http://".
+* **protocol** *Optional* HTTP protocol and version. Example: "HTTP/1.1".
 
-See: HTTP Request-Line https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html
+See: [HTTP Request-Line](https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html)
+
+#### HTTP client request `call` attributes
+
+A `call` event which represents an HTTP client request will have an `http_client_request` attribute, which is an
+object with the following elements:
+
+* **request_method** _Required_ HTTP request method. Example: `"POST"`.
+* **url** _Required_ Full request URL. Example: `"https://website.example/"`.
+* **headers** _Optional_ HTTP headers. Example: `{ "Content-Type": "application/json" }`.
 
 #### HTTP server request `return` attributes
 
-A "return" event which represents an HTTP server response will have an `http_server_response` attribute, which is an
+A `return` event which represents an HTTP server response will have an `http_server_response` attribute, which is an
+object with the following elements:
+
+* **status_code** *Required* HTTP [status code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
+* **mime_type** *Optional* HTTP [MIME type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)
+
+#### HTTP client response `return` attributes
+
+A `return` event which represents an HTTP client response will have an `http_client_response` attribute, which is an
 object with the following elements:
 
 * **status_code** *Required* HTTP [status code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
@@ -367,7 +388,7 @@ object with the following elements:
 #### Message `call` attributes
 
 A "call" event which represents the receipt of a message will have a `message` attribute, which
-is a list of objects in [parameter object format](#parameter-object-format). `message` is also used in 
+is a list of objects in [parameter object format](#parameter-object-format). `message` is also used in
 `http_server_request` to indicate parameters.
 
 #### Example
@@ -477,6 +498,10 @@ is a list of objects in [parameter object format](#parameter-object-format). `me
 ```
 
 # Changelog
+
+## Unreleased
+
+* Added HTTP client request and response data.
 
 ## v1.4.1
 
