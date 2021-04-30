@@ -356,8 +356,10 @@ A `call` event which represents an HTTP client request will have an `http_client
 object with the following elements:
 
 * **request_method** _Required_ HTTP request method. Example: `"POST"`.
-* **url** _Required_ Full request URL. Example: `"https://website.example/"`.
+* **url** _Required_ Request URL, excluding the query string. Example: `"https://website.example/"`.
 * **headers** _Optional_ HTTP headers. Example: `{ "Content-Type": "application/json" }`.
+
+Any query parameters _should_ be passed in the [`message`](#message-call-attributes) attribute of the event.
 
 #### HTTP server request `return` attributes
 
