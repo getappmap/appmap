@@ -10,21 +10,25 @@
       - [Example](#example-1)
     - [events](#events)
       - [Common attributes](#common-attributes-1)
-      - [Function call attributes](#function-call-attributes)
+      - [Common `return` attributes](#common-return-attributes)
+      - [Function `call` attributes](#function-call-attributes)
       - [Parameter object format](#parameter-object-format)
       - [Exception object format](#exception-object-format)
-      - [Function return attributes](#function-return-attributes)
-      - [HTTP server request attributes](#http-server-request-attributes)
-      - [HTTP server response attributes](#http-server-response-attributes)
-      - [SQL query attributes](#sql-query-attributes)
-      - [Message attributes](#message-attributes)
+      - [Function `return` attributes](#function-return-attributes)
+      - [HTTP server request `call` attributes](#http-server-request-call-attributes)
+      - [HTTP client request `call` attributes](#http-client-request-call-attributes)
+      - [HTTP server request `return` attributes](#http-server-request-return-attributes)
+      - [HTTP client response `return` attributes](#http-client-response-return-attributes)
+      - [SQL query `call` attributes](#sql-query-call-attributes)
+      - [Message `call` attributes](#message-call-attributes)
       - [Example](#example-2)
 - [Changelog](#changelog)
+  - [v1.5.0](#v150)
   - [v1.4.1](#v141)
-  - [v1.4](#v14)
-  - [v1.3](#v13)
-  - [v1.2](#v12)
-  - [v1.1](#v11)
+  - [v1.4.0](#v140)
+  - [v1.3.0](#v130)
+  - [v1.2.0](#v120)
+  - [v1.1.0](#v110)
 
 # AppMap data specification
 
@@ -342,13 +346,32 @@ object with the following elements:
 * **request_method** *Required* HTTP request method. Example: "POST".
 * **path_info** *Required* HTTP request path. Example: "/orders/84".
 * **normalized_path_info** *Optional* Parameterized request path. Example: "/orders/:id".
-* **protocol** *Optional* HTTP protocol and version. Example: "HTTP/1.1", "http://".
+* **protocol** *Optional* HTTP protocol and version. Example: "HTTP/1.1".
 
-See: HTTP Request-Line https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html
+See: [HTTP Request-Line](https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html)
+
+#### HTTP client request `call` attributes
+
+A `call` event which represents an HTTP client request will have an `http_client_request` attribute, which is an
+object with the following elements:
+
+* **request_method** _Required_ HTTP request method. Example: `"POST"`.
+* **url** _Required_ Request URL, excluding the query string. Example: `"https://website.example/"`.
+* **headers** _Optional_ HTTP headers. Example: `{ "Content-Type": "application/json" }`.
+
+Any query parameters _should_ be passed in the [`message`](#message-call-attributes) attribute of the event.
 
 #### HTTP server request `return` attributes
 
-A "return" event which represents an HTTP server response will have an `http_server_response` attribute, which is an
+A `return` event which represents an HTTP server response will have an `http_server_response` attribute, which is an
+object with the following elements:
+
+* **status_code** *Required* HTTP [status code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
+* **mime_type** *Optional* HTTP [MIME type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)
+
+#### HTTP client response `return` attributes
+
+A `return` event which represents an HTTP client response will have an `http_client_response` attribute, which is an
 object with the following elements:
 
 * **status_code** *Required* HTTP [status code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
@@ -367,8 +390,8 @@ object with the following elements:
 #### Message `call` attributes
 
 A "call" event which represents the receipt of a message will have a `message` attribute, which
-is a list of objects in [parameter object format](#parameter-object-format). `message` is also used in 
-`http_server_request` to indicate parameters.
+is a list of objects in [parameter object format](#parameter-object-format). `message` is also used in
+`http_client_request` and `http_server_request` to indicate parameters.
 
 #### Example
 
@@ -478,22 +501,26 @@ is a list of objects in [parameter object format](#parameter-object-format). `me
 
 # Changelog
 
+## v1.5.0
+
+* Added `http_client_request` and `http_client_response`.
+
 ## v1.4.1
 
 * Make source location optional; it's not always possible to provide it but appmaps lacking it can still be useful.
 * Make receiver and parameters optional; they not always make sense and there could be performance
   or operational reasons to skip capture.
 
-## v1.4
+## v1.4.0
 
 * Added `normalized_path_info` to HTTP server request object.
 * Clarify required attributes for function `call` events, as compared to common attributes for all `call` events.
 
-## v1.3
+## v1.3.0
 
 * Added `comment` and `source` to a `function` entry in the classmap.
 
-## v1.2
+## v1.2.0
 
 * Added `labels` to a `function` entry in the classmap.
 * Moved `static`, `defined_class`, `method_id`, `path`, `lineno` from `event` common attributes to `call`-only events.
@@ -501,7 +528,7 @@ is a list of objects in [parameter object format](#parameter-object-format). `me
 * Added `labels`, `client`, and `recorder` to `metadata`.
 * Removed `layout`, `layout_owner` and `app_owner` from `metadata`.
 
-## v1.1
+## v1.1.0
 
 * `parameters` changed from a map to an array of parameter objects.
 * Added `receiver`, a parameter object.
