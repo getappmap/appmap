@@ -23,12 +23,12 @@
       - [Message `call` attributes](#message-call-attributes)
       - [Example](#example-2)
 - [Changelog](#changelog)
-  - [Unreleased](#unreleased)
+  - [v1.5.0](#v150)
   - [v1.4.1](#v141)
-  - [v1.4](#v14)
-  - [v1.3](#v13)
-  - [v1.2](#v12)
-  - [v1.1](#v11)
+  - [v1.4.0](#v140)
+  - [v1.3.0](#v130)
+  - [v1.2.0](#v120)
+  - [v1.1.0](#v110)
 
 # AppMap data specification
 
@@ -501,9 +501,9 @@ is a list of objects in [parameter object format](#parameter-object-format). `me
 
 # Changelog
 
-## Unreleased
+## v1.5.0
 
-* Added HTTP client request and response data.
+* Added `http_client_request` and `http_client_response`.
 
 ## v1.4.1
 
@@ -511,16 +511,16 @@ is a list of objects in [parameter object format](#parameter-object-format). `me
 * Make receiver and parameters optional; they not always make sense and there could be performance
   or operational reasons to skip capture.
 
-## v1.4
+## v1.4.0
 
 * Added `normalized_path_info` to HTTP server request object.
 * Clarify required attributes for function `call` events, as compared to common attributes for all `call` events.
 
-## v1.3
+## v1.3.0
 
 * Added `comment` and `source` to a `function` entry in the classmap.
 
-## v1.2
+## v1.2.0
 
 * Added `labels` to a `function` entry in the classmap.
 * Moved `static`, `defined_class`, `method_id`, `path`, `lineno` from `event` common attributes to `call`-only events.
@@ -528,7 +528,7 @@ is a list of objects in [parameter object format](#parameter-object-format). `me
 * Added `labels`, `client`, and `recorder` to `metadata`.
 * Removed `layout`, `layout_owner` and `app_owner` from `metadata`.
 
-## v1.1
+## v1.1.0
 
 * `parameters` changed from a map to an array of parameter objects.
 * Added `receiver`, a parameter object.
