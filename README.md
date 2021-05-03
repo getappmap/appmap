@@ -391,7 +391,7 @@ object with the following elements:
 
 A "call" event which represents the receipt of a message will have a `message` attribute, which
 is a list of objects in [parameter object format](#parameter-object-format). `message` is also used in
-`http_server_request` to indicate parameters.
+`http_client_request` and `http_server_request` to indicate parameters.
 
 #### Example
 
