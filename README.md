@@ -345,7 +345,7 @@ object with the following elements:
 
 * **request_method** *Required* HTTP request method. Example: "POST".
 * **path_info** *Required* HTTP request path. Example: "/orders/84".
-* **normalized_path_info** *Optional* Parameterized request path. Example: "/orders/:id".
+* **normalized_path_info** *Optional* Parameterized request path. When present, each parameter must be surrounded by `{}`. Example: "/orders/{id}".
 * **protocol** *Optional* HTTP protocol and version. Example: "HTTP/1.1".
 
 See: [HTTP Request-Line](https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html)
@@ -500,7 +500,10 @@ is a list of objects in [parameter object format](#parameter-object-format). `me
 ```
 
 # Changelog
+## v1.5.1
 
+* Specify format for parameters in `normalized_path_info`.
+* 
 ## v1.5.0
 
 * Added `http_client_request` and `http_client_response`.
