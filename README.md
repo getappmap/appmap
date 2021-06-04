@@ -317,9 +317,9 @@ In order to correlate function call events with function objects defined in the 
 
 Each parameter is an object containing the following attributes:
 
-* **name** *Required* name of the parameter. Example: "login".
-* **object_id** *Required* unique id of the object. Example: 70340693307040
-* **class** *Required* fully qualified class name of the object. Example: "MyApp::User".
+* **name** *Recommended* name of the parameter. Example: "login".
+* **object_id** *Recommended* unique id of the object. Example: 70340693307040
+* **class** *Required* fully qualified class or type name of the object. Example: "MyApp::User".
 * **value** *Required* string describing the object. This is not a strict JSON serialization, but rather a display
   string which is intended for the user. These strings should be trimmed in length to 100 characters. Example: "MyApp
   user 'alice'"
@@ -508,6 +508,7 @@ is a list of objects in [parameter object format](#parameter-object-format). `me
 
 * Add optional `test_status` and `exception` fields in metadata for conveying the test status.
 * Add HTTP request and response headers, as implemented by appmap-ruby.
+* Relax requirements on parameter objects.
 
 ## v1.5.1
 
