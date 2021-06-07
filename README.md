@@ -23,6 +23,8 @@
       - [Message `call` attributes](#message-call-attributes)
       - [Example](#example-2)
 - [Changelog](#changelog)
+  - [v1.6.0](#v160)
+  - [v1.5.1](#v151)
   - [v1.5.0](#v150)
   - [v1.4.1](#v141)
   - [v1.4.0](#v140)
@@ -504,7 +506,8 @@ is a list of objects in [parameter object format](#parameter-object-format). `me
 ```
 
 # Changelog
-## Unreleased
+
+## v1.6.0
 
 * Add optional `test_status` and `exception` fields in metadata for conveying the test status.
 * Add HTTP request and response headers, as implemented by appmap-ruby.
