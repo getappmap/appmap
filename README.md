@@ -350,7 +350,7 @@ object with the following elements:
 * **mime_type** *Optional* `Content-Type` header.
 * **request_method** *Required* HTTP request method. Example: "POST".
 * **path_info** *Required* HTTP request path. Example: "/orders/84".
-* **normalized_path_info** *Optional* Parameterized request path. When present, each parameter must be surrounded by `{}`. Example: "/orders/{id}".
+* **normalized_path_info** *Optional* Parameterized request path. When present, each parameter must be formatted as `:param-name`. Example: "/orders/:id".
 * **protocol** *Optional* HTTP protocol and version. Example: "HTTP/1.1".
 
 See: [HTTP Request-Line](https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html)
