@@ -286,7 +286,7 @@ return from a function call which occurred during an actual program execution.
 
 Each event object has the following attributes:
 
-* **id** *Required* per-thread unique and continuous identifier. In more detail, each thread should feature a continuous list of event ids starting at 1. That is that the id of the first event of the thread should be `1`, the id of the second event of the thread should be `2`, etc... So an event id is duplicate information of its position in the thread. Example: 23522.
+* **id** *Required* unique and monotonous identifier. That is that the id of any given event should be greater than the ids of all its predecessors. Example: 23522.
 * **event** *Required* event type. Must be "call" or "return".
 * **thread_id** *Required* identifier of the execution thread. Example: 70340688724000.
 
