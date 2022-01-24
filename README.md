@@ -345,13 +345,11 @@ A "return" event which represents a function call has the following attributes:
 A "call" event which represents an HTTP server request will have an `http_server_request` attribute, which is an
 object with the following elements:
 
-* **headers** *Recommended* an object representing HTTP headers/
-* **authorization** *Optional* contents of the `Authorization` header.
-* **mime_type** *Optional* `Content-Type` header.
 * **request_method** *Required* HTTP request method. Example: "POST".
 * **path_info** *Required* HTTP request path. Example: "/orders/84".
 * **normalized_path_info** *Optional* Parameterized request path. When present, each parameter must be formatted as `:param-name`. Example: "/orders/:id".
 * **protocol** *Optional* HTTP protocol and version. Example: "HTTP/1.1".
+* **headers** *Recommended* an object representing HTTP headers.
 
 See: [HTTP Request-Line](https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html)
 
@@ -362,7 +360,7 @@ object with the following elements:
 
 * **request_method** _Required_ HTTP request method. Example: `"POST"`.
 * **url** _Required_ Request URL, excluding the query string. Example: `"https://website.example/"`.
-* **headers** _Optional_ HTTP headers. Example: `{ "Content-Type": "application/json" }`.
+* **headers** _Recommended_ HTTP headers. Example: `{ "Content-Type": "application/json" }`.
 
 Any query parameters _should_ be passed in the [`message`](#message-call-attributes) attribute of the event.
 
@@ -371,17 +369,16 @@ Any query parameters _should_ be passed in the [`message`](#message-call-attribu
 A `return` event which represents an HTTP server response will have an `http_server_response` attribute, which is an
 object with the following elements:
 
-* **status_code** *Required* HTTP [status code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
-* **mime_type** *Optional* HTTP [MIME type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)
+* **status_code** _Required_ HTTP [status code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
+* **headers** _Recommended_ HTTP headers. Example: `{ "Content-Type": "application/json" }`.
 
 #### HTTP client response `return` attributes
 
 A `return` event which represents an HTTP client response will have an `http_client_response` attribute, which is an
 object with the following elements:
 
-* **headers** *Recommended* an object representing HTTP headers of the response.
-* **status_code** *Required* HTTP [status code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
-* **mime_type** *Optional* HTTP [MIME type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)
+* **status_code** _Required_ HTTP [status code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
+* **headers** _Recommended_ an object representing HTTP headers of the response.
 
 #### SQL query `call` attributes
 
