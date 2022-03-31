@@ -374,8 +374,9 @@ object with the following elements:
 
 * **status_code** _Required_ HTTP [status code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
 * **headers** _Recommended_ HTTP headers. Example: `{ "Content-Type": "application/json" }`.
+* **return_value** _Recommended_ for API routes, the object (e.g. JSON) returned by the method. It's recommended that this `return_value` have the optional `properties` (schema) field.
 
-#### HTTP client response `return` attributes
+#### HTTP client request `return` attributes
 
 A `return` event which represents an HTTP client response will have an `http_client_response` attribute, which is an
 object with the following elements:
@@ -507,6 +508,12 @@ is a list of objects in [parameter object format](#parameter-object-format). `me
 ```
 
 # Changelog
+
+## v1.7.0
+
+* Add recommended `size` field to parameter object.
+* Add optional `properties` field to parameter object.
+* Add optional `return_value` to `http_client_response` and `http_server_response`.
 
 ## v1.6.0
 
