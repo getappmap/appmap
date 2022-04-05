@@ -23,6 +23,7 @@
       - [Message `call` attributes](#message-call-attributes)
       - [Example](#example-2)
 - [Changelog](#changelog)
+  - [v1.7.0](#v170)
   - [v1.6.0](#v160)
   - [v1.5.1](#v151)
   - [v1.5.0](#v150)
@@ -325,6 +326,8 @@ Each parameter is an object containing the following attributes:
 * **value** *Required* string describing the object. This is not a strict JSON serialization, but rather a display
   string which is intended for the user. These strings should be trimmed in length to 100 characters. Example: "MyApp
   user 'alice'"
+* **size** *Recommended* number of elements in an array or hash object. Example. "5".
+* **properties** *Optional* schema indicating property names and types of hash and hash-like objects. Each entry is a `name` and `class`. Example: "[ {"name": "id", "class": Integer}, {"name": "created_at", "class": Date}]".
 
 #### Exception object format
 * **class** *Required* fully qualified class name of the exception. Example: "com.myorg.InvalidUserException"
@@ -371,14 +374,16 @@ object with the following elements:
 
 * **status_code** _Required_ HTTP [status code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
 * **headers** _Recommended_ HTTP headers. Example: `{ "Content-Type": "application/json" }`.
+* **return_value** _Recommended_ for API routes, the object (e.g. JSON) returned by the method. It's recommended that this `return_value` have the optional `properties` (schema) field.
 
-#### HTTP client response `return` attributes
+#### HTTP client request `return` attributes
 
 A `return` event which represents an HTTP client response will have an `http_client_response` attribute, which is an
 object with the following elements:
 
 * **status_code** _Required_ HTTP [status code](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
 * **headers** _Recommended_ an object representing HTTP headers of the response.
+* **return_value** _Recommended_ for API routes, the object (e.g. JSON) returned by the method. It's recommended that this `return_value` have the optional `properties` (schema) field.
 
 #### SQL query `call` attributes
 
@@ -503,6 +508,12 @@ is a list of objects in [parameter object format](#parameter-object-format). `me
 ```
 
 # Changelog
+
+## v1.7.0
+
+* Add recommended `size` field to parameter object.
+* Add optional `properties` field to parameter object.
+* Add optional `return_value` to `http_client_response` and `http_server_response`.
 
 ## v1.6.0
 
