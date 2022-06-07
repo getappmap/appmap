@@ -17,12 +17,15 @@
       - [Function `return` attributes](#function-return-attributes)
       - [HTTP server request `call` attributes](#http-server-request-call-attributes)
       - [HTTP client request `call` attributes](#http-client-request-call-attributes)
-      - [HTTP server request `return` attributes](#http-server-request-return-attributes)
+      - [HTTP server response `return` attributes](#http-server-response-return-attributes)
       - [HTTP client response `return` attributes](#http-client-response-return-attributes)
       - [SQL query `call` attributes](#sql-query-call-attributes)
       - [Message `call` attributes](#message-call-attributes)
       - [Example](#example-2)
+    - [eventUpdates](#eventupdates)
+      - [Example](#example-3)
 - [Changelog](#changelog)
+  - [v1.8.0](#v180)
   - [v1.7.0](#v170)
   - [v1.6.0](#v160)
   - [v1.5.1](#v151)
@@ -51,7 +54,8 @@ An AppMap file contains a single top level JSON object comprised of the followin
   "version": <string>,
   "metadata": <object>,
   "classMap": [ <tree of package, class, and function objects> ],
-  "events": [ <list of event objects> ]
+  "events": [ <list of event objects> ],
+  "eventUpdates": <object>
 }
 ```
 
@@ -367,7 +371,7 @@ object with the following elements:
 
 Any query parameters _should_ be passed in the [`message`](#message-call-attributes) attribute of the event.
 
-#### HTTP server request `return` attributes
+#### HTTP server response `return` attributes
 
 A `return` event which represents an HTTP server response will have an `http_server_response` attribute, which is an
 object with the following elements:
@@ -376,7 +380,7 @@ object with the following elements:
 * **headers** _Recommended_ HTTP headers. Example: `{ "Content-Type": "application/json" }`.
 * **return_value** _Recommended_ for API routes, the object (e.g. JSON) returned by the method. It's recommended that this `return_value` have the optional `properties` (schema) field.
 
-#### HTTP client request `return` attributes
+#### HTTP client response `return` attributes
 
 A `return` event which represents an HTTP client response will have an `http_client_response` attribute, which is an
 object with the following elements:
@@ -506,9 +510,76 @@ is a list of objects in [parameter object format](#parameter-object-format). `me
   }
 ]
 ```
-
+### eventUpdates
+*Optional* Object containing events that were updated after they were added to the AppMap. The name
+of each attribute is the `id` of the updated event. The value of the attribute is an `event` object
+that should be used in place of the original event.
+#### Example
+```
+{
+  ...
+  "events": [
+    ...
+    {
+      "event": "call",
+      "http_server_request": {
+        "headers": {
+          "host": "localhost:8080",
+          "user-agent": "curl/7.79.1",
+          "accept": "application/json"
+        },
+        "path_info": "/owners/1/pets/1/edit",
+        "protocol": "HTTP/1.1",
+        "request_method": "GET"
+      },
+      "id": 172,
+      "thread_id": 182
+    },
+    ...
+  ]
+  ...
+  "eventUpdates": {
+    "172": {
+      "event": "call",
+      "http_server_request": {
+        "headers": {
+          "host": "localhost:8080",
+          "user-agent": "curl/7.79.1",
+          "accept": "application/json"
+        },
+        "normalized_path_info": "/owners/:ownerId/pets/:petId/edit",
+        "path_info": "/owners/1/pets/1/edit",
+        "protocol": "HTTP/1.1",
+        "request_method": "GET"
+      },
+      "id": 172,
+      "message": [
+        {
+          "class": "java.lang.String",
+          "kind": "req",
+          "name": "petId",
+          "object_id": 836791441,
+          "value": "1"
+        },
+        {
+          "class": "java.lang.String",
+          "kind": "req",
+          "name": "ownerId",
+          "object_id": 1966623949,
+          "value": "1"
+        }
+      ],
+      "thread_id": 182
+    },
+    ...
+  ],
+  ...
+}
+```
 # Changelog
 
+## v1.8.0
+* Add `eventUpdates`.
 ## v1.7.0
 
 * Add recommended `size` field to parameter object.
