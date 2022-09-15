@@ -44,7 +44,7 @@ and metadata. This data can be used to generate analytics and visualizations of
 code architecture and behavior.
 
 This repository serves as the home project for the AppMap data specification. For
-more information on the AppMap framework, visit [appland.com](https://appland.com).
+more information on the AppMap framework, visit [appmap.io](https://appmap.io).
 
 ## File structure
 
