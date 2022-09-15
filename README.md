@@ -38,13 +38,13 @@
 
 # AppMap data specification
 
-The AppMap data specification outlines a standard JSON data format that contains
+The AppMap data specification is a JSON schema that contains
 detailed information of an application's runtime code execution, data snapshots
-and metadata. This data can be used to generate analytics and visualizations of
-code architecture and behavior.
+and metadata. This data can be used to visualize and analyze code architecture, design,
+and behavior.
 
 This repository serves as the home project for the AppMap data specification. For
-more information on the AppMap framework, visit [appmap.io](https://appmap.io).
+more information on the AppMap platform, visit [appmap.io](https://appmap.io).
 
 ## File structure
 
