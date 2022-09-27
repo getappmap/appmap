@@ -25,6 +25,7 @@
     - [eventUpdates](#eventupdates)
       - [Example](#example-3)
 - [Changelog](#changelog)
+  - [v1.9.0](#v190)
   - [v1.8.0](#v180)
   - [v1.7.0](#v170)
   - [v1.6.0](#v160)
