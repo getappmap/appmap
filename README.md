@@ -165,7 +165,7 @@ Each classMap object has the following attributes:
 
 Each "package" and "class" has the following attributes:
 
-* **children** *Optional* List of child objects which are semantically contained.
+* **children** *Optional* List of child objects which are semantically contained. Children of a "package" must be a "class". Children of a "class" may be a "class" or "function". Each "class" must be the child of a "package".
 
 #### function attributes
 
