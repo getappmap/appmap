@@ -25,6 +25,7 @@
     - [eventUpdates](#eventupdates)
       - [Example](#example-3)
 - [Changelog](#changelog)
+  - [v1.10.0](#v1100)
   - [v1.9.0](#v190)
   - [v1.8.0](#v180)
   - [v1.7.0](#v170)
@@ -333,7 +334,19 @@ Each parameter is an object containing the following attributes:
   string which is intended for the user. These strings should be trimmed in length to 100 characters. Example: "MyApp
   user 'alice'"
 * **size** *Recommended* number of elements in an array or hash object. Example. "5".
-* **properties** *Optional* schema indicating property names and types of hash and hash-like objects. Each entry is a `name` and `class`. Example: "[ {"name": "id", "class": Integer}, {"name": "created_at", "class": Date}]".
+* **properties** *Optional* schema indicating property names and types of hash and hash-like objects. Each entry is a `name`, `class` and optional nested `properties`. Examples:
+
+```
+[
+  {"name": "user_id", "class": Integer},
+  {"name": "created_at", "class": Date},
+  {"name": "page", "class": "Hash", "properties": [
+    { "name": "page_number", "class": "Numeric" },
+    { "name": "offset", "class": "Numeric" },
+    { "name": "total", "class": "Numeric" }
+  ]
+]
+```
 
 #### Exception object format
 * **class** *Required* fully qualified class name of the exception. Example: "com.myorg.InvalidUserException"
@@ -579,6 +592,9 @@ that should be used in place of the original event.
 }
 ```
 # Changelog
+
+## v1.10.0
+* Parameter object `properties` can be nested.
 
 ## v1.9.0
 * Add `metadata.recorder.type`. Required for compliance with this version.
