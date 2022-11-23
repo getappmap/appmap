@@ -369,7 +369,7 @@ object with the following elements:
 
 * **request_method** *Required* HTTP request method. Example: "POST".
 * **path_info** *Required* HTTP request path. Example: "/orders/84".
-* **normalized_path_info** *Optional* Parameterized request path. When present, each parameter must be formatted as `:param-name`. Example: "/orders/:id".
+* **normalized_path_info** *Optional* Parameterized request path. When present, each parameter must be formatted as `{param-name}`. Example: "/orders/{id}".
 * **protocol** *Optional* HTTP protocol and version. Example: "HTTP/1.1".
 * **headers** *Recommended* an object representing HTTP headers.
 
@@ -562,7 +562,7 @@ that should be used in place of the original event.
           "user-agent": "curl/7.79.1",
           "accept": "application/json"
         },
-        "normalized_path_info": "/owners/:ownerId/pets/:petId/edit",
+        "normalized_path_info": "/owners/{ownerId}/pets/{petId}/edit",
         "path_info": "/owners/1/pets/1/edit",
         "protocol": "HTTP/1.1",
         "request_method": "GET"
