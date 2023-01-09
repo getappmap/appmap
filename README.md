@@ -98,6 +98,8 @@ Metadata has the following attributes:
   * **branch** *Required* code branch.
   * **commit** *Required* commit identifier.
   * **status** *Required* status of the repo relative to the commit, represented as a list of status messages. If the repo is clean, the status should be an empty list.
+  * **user_name** *Optional* Git user name.
+  * **user_email** *Optional* Git email address.
   * **tag** *Optional* latest tag.
   * **annotated_tag** *Optional* latest annotated tag.
   * **commits_since_tag** *Optional* number of commits since the last tag.
