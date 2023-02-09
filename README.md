@@ -336,12 +336,14 @@ Each parameter is an object containing the following attributes:
   string which is intended for the user. These strings should be trimmed in length to 100 characters. Example: "MyApp
   user 'alice'"
 * **size** *Recommended* number of elements in an array or hash object. Example. "5".
-* **properties** *Optional* schema indicating property names and types of hash and hash-like objects. Each entry is a `name`, `class` and optional nested `properties`. Examples:
+* **properties** *Optional* schema indicating property names and types of hash and hash-like objects. Each entry is a `name`, `class` and optional nested `properties` or `items`.
+* **items** *Optional* schema indicating element types of array and array-like objects. Each entry is a `class` and optional nested `properties` or `items`. Examples:
 
 ```
 [
-  {"name": "user_id", "class": Integer},
-  {"name": "created_at", "class": Date},
+  {"name": "user_id", "class": "Integer"},
+  {"name": "created_at", "class": "Date"},
+  {"name": "followers", "class": "Array", "items": [{"class": "Integer" }]},
   {"name": "page", "class": "Hash", "properties": [
     { "name": "page_number", "class": "Numeric" },
     { "name": "offset", "class": "Numeric" },
@@ -594,6 +596,9 @@ that should be used in place of the original event.
 }
 ```
 # Changelog
+
+## v1.11.0
+* Add `items` to parameter object format to describe array-like elements
 
 ## v1.10.0
 * Parameter object `properties` can be nested.
