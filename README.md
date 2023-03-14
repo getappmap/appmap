@@ -104,6 +104,7 @@ Metadata has the following attributes:
   * **annotated_tag** *Optional* latest annotated tag.
   * **commits_since_tag** *Optional* number of commits since the last tag.
   * **commits_since_annotated_tag** *Optional* number of commits since the last annotated tag.
+* **source_location** *Optional* path and line number of the source file that was recorded. Most commonly, this is the test case that was recorded. Format is `<path>:<line>`, with `line` being optional.
 * **test_status** *Optional* status of the test that ran to generate the AppMap. Valid values are `succeeded` or `failed`.
 * **exception** *Optional* unhandled exception which occurred during scenairo processing.
   * **class** *Required* exception class name.
