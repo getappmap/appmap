@@ -108,9 +108,9 @@ Metadata has the following attributes:
   * **commits_since_annotated_tag** *Optional* number of commits since the last annotated tag.
 * **source_location** *Optional* path and line number of the source file that was recorded. Most commonly, this is the test case that was recorded. Format is `<path>:<line>`, with `line` being optional.
 * **test_status** *Optional* status of the test that ran to generate the AppMap. Valid values are `succeeded` or `failed`.
-* **test_failure** *Optional* Details about a failed test.
-  * **message** *Required* Assertion failure message or exception message.
-  * **location** *Optional* Path and line number where the assertion failed or the exception was raised. Format is `<path>:<line>`, with `line` being optional.
+* **test_failure** *Optional* details about a failed test.
+  * **message** *Required* assertion failure message or exception message.
+  * **location** *Optional* path and line number where the assertion failed or the exception was raised. Format is `<path>:<line>`, with `line` being optional.
 * **exception** *Optional* unhandled exception which occurred during scenairo processing.
   * **class** *Required* exception class name.
   * **message** *Optional* exception message.
@@ -136,6 +136,11 @@ Metadata has the following attributes:
   },
   "recorder": {
     "name": "rspec"
+  },
+  "test_status": "failed",
+  "test_failure": {
+      "message": "Expected true to be nil or false",
+      "location": "spec/login_spec.rb:34"
   },
   "git": {
     "repository": "https://github.com/applandinc/appmap",
