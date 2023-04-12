@@ -25,6 +25,8 @@
     - [eventUpdates](#eventupdates)
       - [Example](#example-3)
 - [Changelog](#changelog)
+  - [v1.12.0](#v1120)
+  - [v1.11.0](#v1110)
   - [v1.10.0](#v1100)
   - [v1.9.0](#v190)
   - [v1.8.0](#v180)
@@ -106,6 +108,9 @@ Metadata has the following attributes:
   * **commits_since_annotated_tag** *Optional* number of commits since the last annotated tag.
 * **source_location** *Optional* path and line number of the source file that was recorded. Most commonly, this is the test case that was recorded. Format is `<path>:<line>`, with `line` being optional.
 * **test_status** *Optional* status of the test that ran to generate the AppMap. Valid values are `succeeded` or `failed`.
+* **test_failure** *Optional* Details about a failed test.
+  * **message** *Required* Assertion failure message or exception message.
+  * **location** *Optional* Path and line number where the assertion failed or the exception was raised. Format is `<path>:<line>`, with `line` being optional.
 * **exception** *Optional* unhandled exception which occurred during scenairo processing.
   * **class** *Required* exception class name.
   * **message** *Optional* exception message.
@@ -598,8 +603,11 @@ that should be used in place of the original event.
 ```
 # Changelog
 
+## v1.12.0
+* Add `metadata.test_failure` to provide the failed test assertion and its location.
+
 ## v1.11.0
-* Add `items` to parameter object format to describe array-like elements
+* Add `items` to parameter object format to describe array-like elements.
 
 ## v1.10.0
 * Parameter object `properties` can be nested.
