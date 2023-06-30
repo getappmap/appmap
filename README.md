@@ -606,6 +606,13 @@ that should be used in place of the original event.
   ...
 }
 ```
+
+# Validator
+
+A schema validator is available:
+
+[appmap-js validator](https://github.com/getappmap/appmap-js/tree/main/packages/validate)
+
 # Changelog
 
 ## v1.12.0
