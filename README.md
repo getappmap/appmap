@@ -90,7 +90,7 @@ Metadata has the following attributes:
   * **url** *Required* unique URL of the client.
   * **version** *Optional* version of the client.
 * **recorder** *Required* information about the method which was used by the client to record the scenario.
-  * **type** *Required* type of the recording method. Should be consistent across languages and clients. Options: `tests, requests, remote`.
+  * **type** *Required* type of the recording method. Should be consistent across languages and clients. Options: `tests, requests, remote, process`.
   * **name** *Required* name of the recording method. This name must be unique to the client, but need not be unique across different clients.
 * **recording** *Optional* information about the entry-point function which was recorded.
   * **defined_class** *Required* name of the class which defines the entry-point function.
