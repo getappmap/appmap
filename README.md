@@ -25,6 +25,7 @@
     - [eventUpdates](#eventupdates)
       - [Example](#example-3)
 - [Changelog](#changelog)
+  - [v1.12.1](#v1121)
   - [v1.12.0](#v1120)
   - [v1.11.0](#v1110)
   - [v1.10.0](#v1100)
@@ -165,7 +166,7 @@ Note that the terms `package` and `class` are used loosely. In general, they enc
 detailed differences between these language-specific concepts aren't usually very important. Rules of thumb:
 
 * Use a `package` for each directory which contains code. A package may contain classes, but not functions.
-* Use a `class` for each type declaration in a code file. A class may contain classes and functions, but not packages.
+* Use a `class` for each type declaration in a code file. A class may contain functions, but not classes or packages.
 
 #### Common attributes
 
@@ -179,7 +180,7 @@ Each classMap object has the following attributes:
 
 Each "package" and "class" has the following attributes:
 
-* **children** *Optional* List of child objects which are semantically contained. Children of a "package" must be a "class". Children of a "class" may be a "class" or "function". Each "class" must be the child of a "package".
+* **children** *Optional* List of child objects which are semantically contained. Children of a "package" must be a "class". Children of a "class" must be a "function". Each "class" must be the child of a "package".
 
 #### function attributes
 
@@ -614,6 +615,9 @@ A schema validator is available:
 [appmap-js validator](https://github.com/getappmap/appmap-js/tree/main/packages/validate)
 
 # Changelog
+
+## v1.12.1
+* Clarify that classes can only contain functions in the classmap.
 
 ## v1.12.0
 * Add `metadata.test_failure` to provide the failed test assertion and its location.
