@@ -25,6 +25,7 @@
     - [eventUpdates](#eventupdates)
       - [Example](#example-3)
 - [Changelog](#changelog)
+  - [v1.12.2](#v1122)
   - [v1.12.1](#v1121)
   - [v1.12.0](#v1120)
   - [v1.11.0](#v1110)
@@ -159,14 +160,17 @@ Metadata has the following attributes:
 
 ### classMap
 
-*Required* list of code objects. There are three types of supported objects: `package`, `class`, and `function`.
+*Required* forest of code object trees, represented as a list of packages.
 
-Note that the terms `package` and `class` are used loosely. In general, they encopass language-specific concepts such as
-`directory`, `package`, `class`, `interface`, `module`, etc. Since an AppMap is a high-level representation of code, the
+#### Code objects
+
+There are three types of supported objects: `package`, `class`, and `function`.
+Note that the terms `package` and `class` are used loosely. In general, they encompass language-specific concepts such as
+"directory", "package", "class", "interface", "module", etc. Since an AppMap is a high-level representation of code, the
 detailed differences between these language-specific concepts aren't usually very important. Rules of thumb:
 
 * Use a `package` for each directory which contains code. A package may contain classes, but not functions.
-* Use a `class` for each type declaration in a code file. A class may contain functions, but not classes or packages.
+* Use a `class` for each type declaration in a code file. A class may contain functions and classes, but not packages.
 
 #### Common attributes
 
@@ -180,7 +184,7 @@ Each classMap object has the following attributes:
 
 Each "package" and "class" has the following attributes:
 
-* **children** *Optional* List of child objects which are semantically contained. Children of a "package" must be a "class". Children of a "class" must be a "function". Each "class" must be the child of a "package".
+* **children** *Optional* List of child objects which are semantically contained. Children of a `package` must be a `class`. Children of a `class` must be a `class` or `function`. Each `class` must be a descendant of a `package`.
 
 #### function attributes
 
@@ -615,6 +619,9 @@ A schema validator is available:
 [appmap-js validator](https://github.com/getappmap/appmap-js/tree/main/packages/validate)
 
 # Changelog
+
+## v1.12.2
+* Clarify that classes can indeed contain classes, too, in the classmap.
 
 ## v1.12.1
 * Clarify that classes can only contain functions in the classmap.
