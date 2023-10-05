@@ -25,6 +25,7 @@
     - [eventUpdates](#eventupdates)
       - [Example](#example-3)
 - [Changelog](#changelog)
+  - [v1.13.0](#v1130)
   - [v1.12.2](#v1122)
   - [v1.12.1](#v1121)
   - [v1.12.0](#v1120)
@@ -315,6 +316,7 @@ Each event object has the following attributes:
 * **id** *Required* unique identifier. Example: 23522.
 * **event** *Required* event type. Must be "call" or "return".
 * **thread_id** *Required* identifier of the execution thread. Example: 70340688724000.
+* **timestamp** *Optional* timestamp in seconds elapsed from the start of the recording.
 
 #### Common `return` attributes
 
@@ -619,6 +621,9 @@ A schema validator is available:
 [appmap-js validator](https://github.com/getappmap/appmap-js/tree/main/packages/validate)
 
 # Changelog
+
+## v1.13.0
+* Add `event.timestamp` field.
 
 ## v1.12.2
 * Clarify that classes can indeed contain classes, too, in the classmap.
