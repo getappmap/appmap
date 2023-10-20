@@ -316,7 +316,7 @@ Each event object has the following attributes:
 * **id** *Required* unique identifier. Example: 23522.
 * **event** *Required* event type. Must be "call" or "return".
 * **thread_id** *Required* identifier of the execution thread. Example: 70340688724000.
-* **timestamp** *Optional* timestamp in seconds elapsed from the start of the recording.
+* **timestamp** *Optional* timestamp in seconds.
 
 #### Common `return` attributes
 
