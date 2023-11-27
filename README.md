@@ -25,6 +25,7 @@
     - [eventUpdates](#eventupdates)
       - [Example](#example-3)
 - [Changelog](#changelog)
+  - [v1.14.0](#v1140)
   - [v1.13.0](#v1130)
   - [v1.12.2](#v1122)
   - [v1.12.1](#v1121)
@@ -393,7 +394,9 @@ object with the following elements:
 * **path_info** *Required* HTTP request path. Example: "/orders/84".
 * **normalized_path_info** *Optional* Parameterized request path. When present, each parameter must be formatted as `{param-name}`. Example: "/orders/{id}".
 * **protocol** *Optional* HTTP protocol and version. Example: "HTTP/1.1".
-* **headers** *Recommended* an object representing HTTP headers.
+* **authorization** *Optional* the contents of the *Authorization* header.
+* **mime_type** *Optional* the contents of the *Content-Type* header.
+* **headers** *Recommended* an object representing other HTTP headers.
 
 See: [HTTP Request-Line](https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html)
 
@@ -621,6 +624,9 @@ A schema validator is available:
 [appmap-js validator](https://github.com/getappmap/appmap-js/tree/main/packages/validate)
 
 # Changelog
+
+## v1.14.0
+* Add `mime_type` and `authorization` to `event.http_server_request` (as implemented by appmap-ruby and appmap-python).
 
 ## v1.13.0
 * Add `event.timestamp` field.
