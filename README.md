@@ -117,6 +117,7 @@ Metadata has the following attributes:
 * **exception** *Optional* unhandled exception which occurred during scenairo processing.
   * **class** *Required* exception class name.
   * **message** *Optional* exception message.
+* **timestamp** *Optional* ISO 8601 timestamp indicating when the AppMap generation was completed.
 
 #### Example
 
