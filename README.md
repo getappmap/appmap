@@ -117,7 +117,7 @@ Metadata has the following attributes:
 * **exception** *Optional* unhandled exception which occurred during scenairo processing.
   * **class** *Required* exception class name.
   * **message** *Optional* exception message.
-* **timestamp** *Optional* ISO 8601 timestamp indicating when the AppMap generation was completed.
+* **timestamp** *Optional* timestamp in seconds indicating when the AppMap generation was completed.
 
 #### Example
 
@@ -622,6 +622,10 @@ A schema validator is available:
 [appmap-js validator](https://github.com/getappmap/appmap-js/tree/main/packages/validate)
 
 # Changelog
+
+## v1.14.0
+
+* Add `metadata.timestamp` field.
 
 ## v1.13.0
 * Add `event.timestamp` field.
