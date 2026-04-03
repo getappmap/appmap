@@ -1,0 +1,169 @@
+{
+  "version": "1.13.1",
+  "metadata": {
+    "name": "SessionsController create enforces rate limiting after too many attempts",
+    "app": "myapp",
+    "language": {
+      "name": "ruby",
+      "engine": "ruby",
+      "version": "3.2.0"
+    },
+    "frameworks": [
+      {
+        "name": "Ruby on Rails",
+        "version": "7.0.4"
+      },
+      {
+        "name": "RSpec",
+        "version": "3.12.0"
+      }
+    ],
+    "client": {
+      "name": "appmap",
+      "url": "https://github.com/getappmap/appmap-ruby",
+      "version": "0.91.0"
+    },
+    "recorder": {
+      "type": "tests",
+      "name": "rspec"
+    },
+    "git": {
+      "repository": "https://github.com/myorg/myapp",
+      "branch": "main",
+      "commit": "a3f9c12",
+      "status": []
+    },
+    "test_status": "succeeded",
+    "source_location": "spec/controllers/sessions_controller_spec.rb:45"
+  },
+  "classMap": [],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "http_server_request": {
+        "request_method": "POST",
+        "path_info": "/sessions",
+        "protocol": "HTTP/1.1",
+        "headers": {
+          "host": "localhost:3000",
+          "content-type": "application/json",
+          "accept": "application/json",
+          "user-agent": "RSpec/3.12.0"
+        }
+      },
+      "message": [
+        {
+          "name": "email",
+          "class": "String",
+          "value": "alice@example.com",
+          "object_id": 220952
+        },
+        {
+          "name": "password",
+          "class": "String",
+          "value": "[FILTERED]",
+          "object_id": 610073
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "defined_class": "SessionsController",
+      "method_id": "create",
+      "path": "app/controllers/sessions_controller.rb",
+      "lineno": 8,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "SessionsController",
+        "value": "#<SessionsController:0x7c30bcab0e>",
+        "object_id": 116996
+      },
+      "parameters": []
+    },
+    {
+      "id": 3,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "defined_class": "RateLimitConcern",
+      "method_id": "check_rate_limit!",
+      "path": "app/controllers/concerns/rate_limit_concern.rb",
+      "lineno": 12,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "RateLimitConcern",
+        "value": "#<RateLimitConcern:0x3b4562be7f>",
+        "object_id": 839595
+      },
+      "parameters": [
+        {
+          "name": "key",
+          "class": "String",
+          "value": "login:alice@example.com",
+          "object_id": 867022
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "SELECT \"rate_limit_counters\".\"count\" FROM \"rate_limit_counters\" WHERE \"rate_limit_counters\".\"key\" = $1",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[\"login:alice@example.com\"]",
+          "object_id": 331169
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "event": "return",
+      "parent_id": 4,
+      "elapsed": 0.001
+    },
+    {
+      "id": 6,
+      "event": "return",
+      "parent_id": 3,
+      "elapsed": 0.002,
+      "exceptions": [
+        {
+          "class": "RateLimitExceeded",
+          "message": "Too many login attempts. Try again in 300 seconds.",
+          "object_id": 490133
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "event": "return",
+      "parent_id": 2,
+      "elapsed": 0.003
+    },
+    {
+      "id": 8,
+      "event": "return",
+      "parent_id": 1,
+      "elapsed": 0.004,
+      "http_server_response": {
+        "status_code": 429,
+        "headers": {
+          "content-type": "application/json; charset=utf-8",
+          "cache-control": "no-cache"
+        }
+      }
+    }
+  ]
+}

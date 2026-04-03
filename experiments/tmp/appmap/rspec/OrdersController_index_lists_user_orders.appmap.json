@@ -1,0 +1,179 @@
+{
+  "version": "1.13.1",
+  "metadata": {
+    "name": "OrdersController index lists user orders filtered by status",
+    "app": "myapp",
+    "language": {
+      "name": "ruby",
+      "engine": "ruby",
+      "version": "3.2.0"
+    },
+    "frameworks": [
+      {
+        "name": "Ruby on Rails",
+        "version": "7.0.4"
+      },
+      {
+        "name": "RSpec",
+        "version": "3.12.0"
+      }
+    ],
+    "client": {
+      "name": "appmap",
+      "url": "https://github.com/getappmap/appmap-ruby",
+      "version": "0.91.0"
+    },
+    "recorder": {
+      "type": "tests",
+      "name": "rspec"
+    },
+    "git": {
+      "repository": "https://github.com/myorg/myapp",
+      "branch": "main",
+      "commit": "a3f9c12",
+      "status": []
+    },
+    "test_status": "succeeded",
+    "source_location": "spec/controllers/orders_controller_spec.rb:98"
+  },
+  "classMap": [],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "http_server_request": {
+        "request_method": "GET",
+        "path_info": "/orders",
+        "protocol": "HTTP/1.1",
+        "headers": {
+          "host": "localhost:3000",
+          "content-type": "application/json",
+          "accept": "application/json",
+          "user-agent": "RSpec/3.12.0",
+          "authorization": "Bearer tok.abc"
+        }
+      },
+      "message": [
+        {
+          "name": "status",
+          "class": "String",
+          "value": "confirmed",
+          "object_id": 331556
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "defined_class": "AuthenticationConcern",
+      "method_id": "authenticate_user!",
+      "path": "app/controllers/concerns/authentication_concern.rb",
+      "lineno": 5,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "AuthenticationConcern",
+        "value": "#<AuthenticationConcern:0xb34d125e7f>",
+        "object_id": 557251
+      },
+      "parameters": []
+    },
+    {
+      "id": 3,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "SELECT \"users\".* FROM \"users\" WHERE \"users\".\"id\" = $1 LIMIT $2",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[42, 1]",
+          "object_id": 289077
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "event": "return",
+      "parent_id": 3,
+      "elapsed": 0.002
+    },
+    {
+      "id": 5,
+      "event": "return",
+      "parent_id": 2,
+      "elapsed": 0.003,
+      "return_value": {
+        "class": "User",
+        "value": "#<User id: 42>",
+        "object_id": 164007
+      }
+    },
+    {
+      "id": 6,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "defined_class": "OrdersController",
+      "method_id": "index",
+      "path": "app/controllers/orders_controller.rb",
+      "lineno": 5,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "OrdersController",
+        "value": "#<OrdersController:0xef80ee526e>",
+        "object_id": 141291
+      },
+      "parameters": []
+    },
+    {
+      "id": 7,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "SELECT \"orders\".* FROM \"orders\" WHERE \"orders\".\"user_id\" = $1 AND \"orders\".\"status\" = $2 ORDER BY created_at DESC",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[42, \"confirmed\"]",
+          "object_id": 725459
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "event": "return",
+      "parent_id": 7,
+      "elapsed": 0.006
+    },
+    {
+      "id": 9,
+      "event": "return",
+      "parent_id": 6,
+      "elapsed": 0.012
+    },
+    {
+      "id": 10,
+      "event": "return",
+      "parent_id": 1,
+      "elapsed": 0.014,
+      "http_server_response": {
+        "status_code": 200,
+        "headers": {
+          "content-type": "application/json; charset=utf-8",
+          "cache-control": "no-cache"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "version": "1.13.1",
+  "metadata": {
+    "name": "OrdersController create returns 422 when stock is insufficient",
+    "app": "myapp",
+    "language": {
+      "name": "ruby",
+      "engine": "ruby",
+      "version": "3.2.0"
+    },
+    "frameworks": [
+      {
+        "name": "Ruby on Rails",
+        "version": "7.0.4"
+      },
+      {
+        "name": "RSpec",
+        "version": "3.12.0"
+      }
+    ],
+    "client": {
+      "name": "appmap",
+      "url": "https://github.com/getappmap/appmap-ruby",
+      "version": "0.91.0"
+    },
+    "recorder": {
+      "type": "tests",
+      "name": "rspec"
+    },
+    "git": {
+      "repository": "https://github.com/myorg/myapp",
+      "branch": "main",
+      "commit": "a3f9c12",
+      "status": []
+    },
+    "test_status": "succeeded",
+    "source_location": "spec/controllers/orders_controller_spec.rb:45"
+  },
+  "classMap": [],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "http_server_request": {
+        "request_method": "POST",
+        "path_info": "/orders",
+        "protocol": "HTTP/1.1",
+        "headers": {
+          "host": "localhost:3000",
+          "content-type": "application/json",
+          "accept": "application/json",
+          "user-agent": "RSpec/3.12.0",
+          "authorization": "Bearer tok.abc"
+        }
+      },
+      "message": [
+        {
+          "name": "product_id",
+          "class": "Integer",
+          "value": "7",
+          "object_id": 230488
+        },
+        {
+          "name": "quantity",
+          "class": "Integer",
+          "value": "100",
+          "object_id": 765845
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "defined_class": "AuthenticationConcern",
+      "method_id": "authenticate_user!",
+      "path": "app/controllers/concerns/authentication_concern.rb",
+      "lineno": 5,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "AuthenticationConcern",
+        "value": "#<AuthenticationConcern:0xc81ea45cd6>",
+        "object_id": 195978
+      },
+      "parameters": []
+    },
+    {
+      "id": 3,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "SELECT \"users\".* FROM \"users\" WHERE \"users\".\"id\" = $1 LIMIT $2",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[42, 1]",
+          "object_id": 488119
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "event": "return",
+      "parent_id": 3,
+      "elapsed": 0.002
+    },
+    {
+      "id": 5,
+      "event": "return",
+      "parent_id": 2,
+      "elapsed": 0.003,
+      "return_value": {
+        "class": "User",
+        "value": "#<User id: 42>",
+        "object_id": 974349
+      }
+    },
+    {
+      "id": 6,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "defined_class": "OrdersController",
+      "method_id": "create",
+      "path": "app/controllers/orders_controller.rb",
+      "lineno": 15,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "OrdersController",
+        "value": "#<OrdersController:0x3bfb0323a1>",
+        "object_id": 138159
+      },
+      "parameters": []
+    },
+    {
+      "id": 7,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "SELECT \"products\".* FROM \"products\" WHERE \"products\".\"id\" = $1 LIMIT $2",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[7, 1]",
+          "object_id": 734917
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "event": "return",
+      "parent_id": 7,
+      "elapsed": 0.002
+    },
+    {
+      "id": 9,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "SELECT \"products\".\"stock_count\" FROM \"products\" WHERE \"products\".\"id\" = $1 FOR UPDATE",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[7]",
+          "object_id": 122687
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "event": "return",
+      "parent_id": 9,
+      "elapsed": 0.004
+    },
+    {
+      "id": 11,
+      "event": "return",
+      "parent_id": 6,
+      "elapsed": 0.008,
+      "exceptions": [
+        {
+          "class": "InsufficientStockError",
+          "message": "Only 50 units of product 7 available, requested 100",
+          "object_id": 304043
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "event": "return",
+      "parent_id": 1,
+      "elapsed": 0.009,
+      "http_server_response": {
+        "status_code": 422,
+        "headers": {
+          "content-type": "application/json; charset=utf-8",
+          "cache-control": "no-cache"
+        }
+      }
+    }
+  ]
+}

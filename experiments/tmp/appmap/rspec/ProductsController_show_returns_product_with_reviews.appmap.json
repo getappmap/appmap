@@ -1,0 +1,143 @@
+{
+  "version": "1.13.1",
+  "metadata": {
+    "name": "ProductsController show returns product with reviews",
+    "app": "myapp",
+    "language": {
+      "name": "ruby",
+      "engine": "ruby",
+      "version": "3.2.0"
+    },
+    "frameworks": [
+      {
+        "name": "Ruby on Rails",
+        "version": "7.0.4"
+      },
+      {
+        "name": "RSpec",
+        "version": "3.12.0"
+      }
+    ],
+    "client": {
+      "name": "appmap",
+      "url": "https://github.com/getappmap/appmap-ruby",
+      "version": "0.91.0"
+    },
+    "recorder": {
+      "type": "tests",
+      "name": "rspec"
+    },
+    "git": {
+      "repository": "https://github.com/myorg/myapp",
+      "branch": "main",
+      "commit": "a3f9c12",
+      "status": []
+    },
+    "test_status": "succeeded",
+    "source_location": "spec/controllers/products_controller_spec.rb:22"
+  },
+  "classMap": [],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "http_server_request": {
+        "request_method": "GET",
+        "path_info": "/products/7",
+        "protocol": "HTTP/1.1",
+        "headers": {
+          "host": "localhost:3000",
+          "content-type": "application/json",
+          "accept": "application/json",
+          "user-agent": "RSpec/3.12.0"
+        }
+      },
+      "message": []
+    },
+    {
+      "id": 2,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "defined_class": "ProductsController",
+      "method_id": "show",
+      "path": "app/controllers/products_controller.rb",
+      "lineno": 22,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "ProductsController",
+        "value": "#<ProductsController:0x5691dc59ef>",
+        "object_id": 831588
+      },
+      "parameters": []
+    },
+    {
+      "id": 3,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "SELECT \"products\".* FROM \"products\" WHERE \"products\".\"id\" = $1 LIMIT $2",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[7, 1]",
+          "object_id": 805314
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "event": "return",
+      "parent_id": 3,
+      "elapsed": 0.002
+    },
+    {
+      "id": 5,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "SELECT \"reviews\".* FROM \"reviews\" WHERE \"reviews\".\"product_id\" = $1 ORDER BY created_at DESC LIMIT $2",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[7, 5]",
+          "object_id": 313295
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "event": "return",
+      "parent_id": 5,
+      "elapsed": 0.004
+    },
+    {
+      "id": 7,
+      "event": "return",
+      "parent_id": 2,
+      "elapsed": 0.009
+    },
+    {
+      "id": 8,
+      "event": "return",
+      "parent_id": 1,
+      "elapsed": 0.01,
+      "http_server_response": {
+        "status_code": 200,
+        "headers": {
+          "content-type": "application/json; charset=utf-8",
+          "cache-control": "no-cache"
+        }
+      }
+    }
+  ]
+}

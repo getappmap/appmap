@@ -1,0 +1,126 @@
+{
+  "version": "1.13.1",
+  "metadata": {
+    "name": "UsersController show returns 404 for unknown user",
+    "app": "myapp",
+    "language": {
+      "name": "ruby",
+      "engine": "ruby",
+      "version": "3.2.0"
+    },
+    "frameworks": [
+      {
+        "name": "Ruby on Rails",
+        "version": "7.0.4"
+      },
+      {
+        "name": "RSpec",
+        "version": "3.12.0"
+      }
+    ],
+    "client": {
+      "name": "appmap",
+      "url": "https://github.com/getappmap/appmap-ruby",
+      "version": "0.91.0"
+    },
+    "recorder": {
+      "type": "tests",
+      "name": "rspec"
+    },
+    "git": {
+      "repository": "https://github.com/myorg/myapp",
+      "branch": "main",
+      "commit": "a3f9c12",
+      "status": []
+    },
+    "test_status": "succeeded",
+    "source_location": "spec/controllers/users_controller_spec.rb:35"
+  },
+  "classMap": [],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "http_server_request": {
+        "request_method": "GET",
+        "path_info": "/users/9999",
+        "protocol": "HTTP/1.1",
+        "headers": {
+          "host": "localhost:3000",
+          "content-type": "application/json",
+          "accept": "application/json",
+          "user-agent": "RSpec/3.12.0"
+        }
+      },
+      "message": []
+    },
+    {
+      "id": 2,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "defined_class": "UsersController",
+      "method_id": "show",
+      "path": "app/controllers/users_controller.rb",
+      "lineno": 22,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "UsersController",
+        "value": "#<UsersController:0xf4f7c1bd87>",
+        "object_id": 475441
+      },
+      "parameters": []
+    },
+    {
+      "id": 3,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "SELECT \"users\".* FROM \"users\" WHERE \"users\".\"id\" = $1 LIMIT $2",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[9999, 1]",
+          "object_id": 711720
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "event": "return",
+      "parent_id": 3,
+      "elapsed": 0.002
+    },
+    {
+      "id": 5,
+      "event": "return",
+      "parent_id": 2,
+      "elapsed": 0.004,
+      "exceptions": [
+        {
+          "class": "ActiveRecord::RecordNotFound",
+          "message": "Couldn't find User with 'id'=9999",
+          "object_id": 329053
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "event": "return",
+      "parent_id": 1,
+      "elapsed": 0.005,
+      "http_server_response": {
+        "status_code": 404,
+        "headers": {
+          "content-type": "application/json; charset=utf-8",
+          "cache-control": "no-cache"
+        }
+      }
+    }
+  ]
+}

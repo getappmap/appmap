@@ -1,0 +1,300 @@
+{
+  "version": "1.13.1",
+  "metadata": {
+    "name": "OrdersController create rolls back transaction when Stripe fails",
+    "app": "myapp",
+    "language": {
+      "name": "ruby",
+      "engine": "ruby",
+      "version": "3.2.0"
+    },
+    "frameworks": [
+      {
+        "name": "Ruby on Rails",
+        "version": "7.0.4"
+      },
+      {
+        "name": "RSpec",
+        "version": "3.12.0"
+      }
+    ],
+    "client": {
+      "name": "appmap",
+      "url": "https://github.com/getappmap/appmap-ruby",
+      "version": "0.91.0"
+    },
+    "recorder": {
+      "type": "tests",
+      "name": "rspec"
+    },
+    "git": {
+      "repository": "https://github.com/myorg/myapp",
+      "branch": "main",
+      "commit": "a3f9c12",
+      "status": []
+    },
+    "test_status": "failed",
+    "source_location": "spec/controllers/orders_controller_spec.rb:72",
+    "test_failure": {
+      "message": "expected HTTP status 422 but got 500",
+      "location": "spec/controllers/orders_controller_spec.rb:89"
+    }
+  },
+  "classMap": [],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "http_server_request": {
+        "request_method": "POST",
+        "path_info": "/orders",
+        "protocol": "HTTP/1.1",
+        "headers": {
+          "host": "localhost:3000",
+          "content-type": "application/json",
+          "accept": "application/json",
+          "user-agent": "RSpec/3.12.0",
+          "authorization": "Bearer tok.abc"
+        }
+      },
+      "message": [
+        {
+          "name": "product_id",
+          "class": "Integer",
+          "value": "7",
+          "object_id": 293957
+        },
+        {
+          "name": "quantity",
+          "class": "Integer",
+          "value": "2",
+          "object_id": 852996
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "defined_class": "AuthenticationConcern",
+      "method_id": "authenticate_user!",
+      "path": "app/controllers/concerns/authentication_concern.rb",
+      "lineno": 5,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "AuthenticationConcern",
+        "value": "#<AuthenticationConcern:0xf51fb797fa>",
+        "object_id": 320805
+      },
+      "parameters": []
+    },
+    {
+      "id": 3,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "SELECT \"users\".* FROM \"users\" WHERE \"users\".\"id\" = $1 LIMIT $2",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[42, 1]",
+          "object_id": 862477
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "event": "return",
+      "parent_id": 3,
+      "elapsed": 0.002
+    },
+    {
+      "id": 5,
+      "event": "return",
+      "parent_id": 2,
+      "elapsed": 0.003,
+      "return_value": {
+        "class": "User",
+        "value": "#<User id: 42>",
+        "object_id": 939643
+      }
+    },
+    {
+      "id": 6,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "defined_class": "OrdersController",
+      "method_id": "create",
+      "path": "app/controllers/orders_controller.rb",
+      "lineno": 15,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "OrdersController",
+        "value": "#<OrdersController:0x0bade9b2b4>",
+        "object_id": 670672
+      },
+      "parameters": []
+    },
+    {
+      "id": 7,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "SELECT \"products\".* FROM \"products\" WHERE \"products\".\"id\" = $1 LIMIT $2",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[7, 1]",
+          "object_id": 546293
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "event": "return",
+      "parent_id": 7,
+      "elapsed": 0.002
+    },
+    {
+      "id": 9,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "SELECT \"products\".\"stock_count\" FROM \"products\" WHERE \"products\".\"id\" = $1 FOR UPDATE",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[7]",
+          "object_id": 750746
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "event": "return",
+      "parent_id": 9,
+      "elapsed": 0.004
+    },
+    {
+      "id": 11,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "INSERT INTO \"orders\" (\"user_id\",\"total\",\"status\",\"created_at\",\"updated_at\") VALUES ($1,$2,$3,$4,$5) RETURNING \"id\"",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[42, \"59.98\", \"pending\"]",
+          "object_id": 206430
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "event": "return",
+      "parent_id": 11,
+      "elapsed": 0.008
+    },
+    {
+      "id": 13,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "INSERT INTO \"line_items\" (\"order_id\",\"product_id\",\"quantity\",\"unit_price\") VALUES ($1,$2,$3,$4) RETURNING \"id\"",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[101, 7, 2, \"29.99\"]",
+          "object_id": 976507
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "event": "return",
+      "parent_id": 13,
+      "elapsed": 0.004
+    },
+    {
+      "id": 15,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "http_client_request": {
+        "request_method": "POST",
+        "url": "https://api.stripe.com/v1/payment_intents",
+        "headers": {
+          "content-type": "application/json"
+        }
+      },
+      "message": [
+        {
+          "name": "amount",
+          "class": "Integer",
+          "value": "5998",
+          "object_id": 372545
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "event": "return",
+      "parent_id": 15,
+      "elapsed": 0.287,
+      "http_client_response": {
+        "status_code": 402,
+        "headers": {
+          "content-type": "application/json"
+        }
+      }
+    },
+    {
+      "id": 17,
+      "event": "return",
+      "parent_id": 6,
+      "elapsed": 0.291,
+      "exceptions": [
+        {
+          "class": "Stripe::CardError",
+          "message": "Your card was declined.",
+          "object_id": 173404
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "event": "return",
+      "parent_id": 1,
+      "elapsed": 0.292,
+      "http_server_response": {
+        "status_code": 500,
+        "headers": {
+          "content-type": "application/json; charset=utf-8",
+          "cache-control": "no-cache"
+        }
+      }
+    }
+  ]
+}

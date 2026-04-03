@@ -1,0 +1,145 @@
+{
+  "version": "1.13.1",
+  "metadata": {
+    "name": "UserMailer welcome_email retries on transient SendGrid errors",
+    "app": "myapp",
+    "language": {
+      "name": "ruby",
+      "engine": "ruby",
+      "version": "3.2.0"
+    },
+    "frameworks": [
+      {
+        "name": "Ruby on Rails",
+        "version": "7.0.4"
+      },
+      {
+        "name": "RSpec",
+        "version": "3.12.0"
+      }
+    ],
+    "client": {
+      "name": "appmap",
+      "url": "https://github.com/getappmap/appmap-ruby",
+      "version": "0.91.0"
+    },
+    "recorder": {
+      "type": "tests",
+      "name": "rspec"
+    },
+    "git": {
+      "repository": "https://github.com/myorg/myapp",
+      "branch": "main",
+      "commit": "a3f9c12",
+      "status": []
+    },
+    "test_status": "failed",
+    "source_location": "spec/mailers/user_mailer_spec.rb:22",
+    "test_failure": {
+      "message": "expected no exception but SendGrid::Error was raised",
+      "location": "spec/mailers/user_mailer_spec.rb:31"
+    }
+  },
+  "classMap": [],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "defined_class": "UserMailer",
+      "method_id": "welcome_email",
+      "path": "app/mailers/user_mailer.rb",
+      "lineno": 6,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "UserMailer",
+        "value": "#<UserMailer:0xe2ebe21368>",
+        "object_id": 797938
+      },
+      "parameters": [
+        {
+          "name": "user",
+          "class": "User",
+          "value": "#<User id: 99>",
+          "object_id": 725781
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "defined_class": "ActionMailer::MessageDelivery",
+      "method_id": "deliver_now",
+      "path": "gems/actionmailer-7.0.4/lib/action_mailer/message_delivery.rb",
+      "lineno": 120,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "ActionMailer::MessageDelivery",
+        "value": "#<ActionMailer::MessageDelivery:0x062cc0f859>",
+        "object_id": 594535
+      },
+      "parameters": []
+    },
+    {
+      "id": 3,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "http_client_request": {
+        "request_method": "POST",
+        "url": "https://api.sendgrid.com/v3/mail/send",
+        "headers": {
+          "content-type": "application/json"
+        }
+      },
+      "message": [
+        {
+          "name": "to",
+          "class": "String",
+          "value": "bob@example.com",
+          "object_id": 814374
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "event": "return",
+      "parent_id": 3,
+      "elapsed": 0.241,
+      "http_client_response": {
+        "status_code": 500,
+        "headers": {
+          "content-type": "application/json"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "event": "return",
+      "parent_id": 2,
+      "elapsed": 0.244,
+      "exceptions": [
+        {
+          "class": "SendGrid::Error",
+          "message": "Internal server error from SendGrid",
+          "object_id": 529816
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "event": "return",
+      "parent_id": 1,
+      "elapsed": 0.245,
+      "exceptions": [
+        {
+          "class": "SendGrid::Error",
+          "message": "Internal server error from SendGrid",
+          "object_id": 696757
+        }
+      ]
+    }
+  ]
+}
