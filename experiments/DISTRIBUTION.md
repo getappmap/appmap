@@ -13,6 +13,63 @@ on Windows, versions conflict, and pip dependencies add friction. We need binari
 
 ---
 
+## Interface: CLI + Skill vs MCP Server
+
+**For agents with shell access, CLI is the right primary interface.** This covers
+Claude Code, Cursor Agent, most agentic pipelines, and any CI environment. A CLI
+tool called via bash is strictly simpler than an MCP server: no protocol overhead
+(no JSON-RPC handshake, no stdio lifecycle), the output is already LLM-readable
+text, and the same commands work identically for humans and agents.
+
+A **skill** (a small prompt or CLAUDE.md section) is the documentation layer that
+teaches the agent the navigation workflow:
+> "Start with `appmap nav list` to orient, narrow with `find`/`route`, inspect with
+> `tree`, drill into specific events with `show N`."
+
+**MCP is the right secondary interface** for GUI LLM clients that don't expose shell
+access — Claude Desktop, some IDE integrations. Both can be served by the same
+binary: `appmap nav tree file.appmap.json` for CLI, `appmap nav --mcp` for MCP mode.
+
+The implementation is identical; only the I/O transport differs. Build CLI first,
+add MCP mode later as a thin adapter.
+
+---
+
+## Index Format: JSON vs SQLite
+
+**JSON is correct for the index.** The arguments for SQLite do not hold at realistic
+scale:
+
+| Suite size | JSON index | Parse time |
+|------------|------------|------------|
+| 100 files  | ~130 KB    | <5ms       |
+| 500 files  | ~650 KB    | ~20ms      |
+| 2,000 files| ~2.6 MB    | ~80ms      |
+
+Real test suites have 50–500 tests. You'd need >5,000 files before JSON parse time
+matters — far beyond any single project's current test suite.
+
+The pre-built inverted indexes (`by_class`, `by_table`, `by_http_entry`) in the JSON
+already provide O(1) lookup for all common queries, which is what SQLite indexes
+would give you anyway.
+
+More importantly, `better-sqlite3` and `node-sqlite3` are **native Node.js addons**
+(compiled `.node` files) that esbuild cannot bundle. This breaks the existing build
+pipeline and complicates cross-platform distribution significantly. Bun has built-in
+SQLite but that ties the tool to Bun. The distribution cost is real and the
+performance benefit is not.
+
+JSON also has genuine interoperability advantages: readable with jq, committable to
+git, diffable between CI runs, consumable from any language.
+
+**When to revisit:** If the use case expands to accumulating *historical* runs across
+many CI builds for trend analysis. That's a different product (analytics, not
+navigation) and would warrant a proper database rather than SQLite anyway.
+
+---
+
+---
+
 ## Option A: Add as subcommands to the existing `appmap` CLI
 
 The existing `appmap` TypeScript CLI in `getappmap/appmap-js` already:
@@ -233,7 +290,8 @@ needs filesystem access.
 ### Immediate (now)
 
 **Port the prototype to TypeScript and add as `appmap nav` subcommands** in
-`packages/cli` of the existing `appmap-js` monorepo.
+`packages/cli` of the existing `appmap-js` monorepo, plus a companion skill
+(prompt template) that teaches agents the navigation workflow.
 
 Implementation sketch:
 - `packages/cli/src/cmds/nav/` — new command directory
@@ -250,9 +308,10 @@ straightforward and the AppMap parsing is simpler in TypeScript because
 
 ### Short-term (1–2 months)
 
-**Expose as MCP server** (`appmap nav --mcp`). This is the highest-leverage
-step for LLM integration: it makes these tools available in Claude Desktop,
-Cursor, and other LLM clients without any additional installation.
+**Expose as MCP server** (`appmap nav --mcp`) as a secondary interface for GUI LLM
+clients (Claude Desktop, Cursor) that don't expose shell access. The implementation
+is the same CLI logic wrapped in a stdio JSON-RPC adapter. For agents with shell
+access, the CLI + skill is already sufficient and simpler.
 
 ### Medium-term
 
