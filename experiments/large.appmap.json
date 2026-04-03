@@ -1,0 +1,1129 @@
+{
+  "version": "1.13.1",
+  "metadata": {
+    "name": "OrdersController#create processes a new order with payment and notifications",
+    "app": "myapp",
+    "language": {
+      "name": "ruby",
+      "engine": "ruby",
+      "version": "3.2.0"
+    },
+    "frameworks": [
+      {
+        "name": "Ruby on Rails",
+        "version": "7.0.4"
+      },
+      {
+        "name": "RSpec",
+        "version": "3.12.0"
+      }
+    ],
+    "client": {
+      "name": "appmap",
+      "url": "https://github.com/getappmap/appmap-ruby",
+      "version": "0.91.0"
+    },
+    "recorder": {
+      "type": "tests",
+      "name": "rspec"
+    },
+    "test_status": "succeeded",
+    "source_location": "spec/controllers/orders_controller_spec.rb:18"
+  },
+  "classMap": [],
+  "events": [
+    {
+      "http_server_request": {
+        "request_method": "POST",
+        "path_info": "/orders",
+        "normalized_path_info": "/orders",
+        "protocol": "HTTP/1.1",
+        "headers": {
+          "host": "api.example.com",
+          "content-type": "application/json",
+          "authorization": "Bearer tok.abc123",
+          "user-agent": "Mozilla/5.0",
+          "accept": "application/json",
+          "accept-encoding": "gzip, deflate",
+          "content-length": "145"
+        }
+      },
+      "message": [
+        {
+          "name": "product_id",
+          "class": "Integer",
+          "value": "7",
+          "object_id": 100001
+        },
+        {
+          "name": "quantity",
+          "class": "Integer",
+          "value": "3",
+          "object_id": 100002
+        },
+        {
+          "name": "shipping_address",
+          "class": "String",
+          "value": "123 Main St, Springfield",
+          "object_id": 100003
+        }
+      ],
+      "id": 1,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "defined_class": "AuthenticationConcern",
+      "method_id": "authenticate_user!",
+      "path": "app/controllers/concerns/authentication_concern.rb",
+      "lineno": 5,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "AuthenticationConcern",
+        "value": "#<AuthenticationConcern:0x0000000000030d41>",
+        "object_id": 200001
+      },
+      "parameters": [],
+      "id": 2,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "SELECT \"users\".* FROM \"users\" WHERE \"users\".\"id\" = $1 LIMIT $2",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[\"42\", 1]",
+          "object_id": 200010
+        }
+      ],
+      "id": 3,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "id": 4,
+      "event": "return",
+      "parent_id": 3,
+      "elapsed": 0.002341
+    },
+    {
+      "id": 5,
+      "event": "return",
+      "parent_id": 2,
+      "elapsed": 0.003892,
+      "return_value": {
+        "name": "user",
+        "class": "User",
+        "value": "#<User id: 42>",
+        "object_id": 200002
+      }
+    },
+    {
+      "defined_class": "RateLimitConcern",
+      "method_id": "check_rate_limit!",
+      "path": "app/controllers/concerns/rate_limit_concern.rb",
+      "lineno": 12,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "RateLimitConcern",
+        "value": "#<RateLimitConcern:0x0000000000030d43>",
+        "object_id": 200003
+      },
+      "parameters": [
+        {
+          "name": "key",
+          "class": "String",
+          "value": "user:42:orders",
+          "object_id": 200004
+        }
+      ],
+      "id": 6,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "id": 7,
+      "event": "return",
+      "parent_id": 6,
+      "elapsed": 0.000421,
+      "return_value": {
+        "name": "result",
+        "class": "TrueClass",
+        "value": "true",
+        "object_id": 2
+      }
+    },
+    {
+      "defined_class": "OrdersController",
+      "method_id": "create",
+      "path": "app/controllers/orders_controller.rb",
+      "lineno": 15,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "OrdersController",
+        "value": "#<OrdersController:0x00000000000493e1>",
+        "object_id": 300001
+      },
+      "parameters": [],
+      "id": 8,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "defined_class": "OrdersController",
+      "method_id": "order_params",
+      "path": "app/controllers/orders_controller.rb",
+      "lineno": 45,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "OrdersController",
+        "value": "#<OrdersController:0x00000000000493e1>",
+        "object_id": 300001
+      },
+      "parameters": [],
+      "id": 9,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "id": 10,
+      "event": "return",
+      "parent_id": 9,
+      "elapsed": 0.000198,
+      "return_value": {
+        "name": "params",
+        "class": "ActionController::Parameters",
+        "value": "{\"product_id\"=>7, \"quantity\"=>3, \"shipping_address\"=>\"123 Main St\"}",
+        "object_id": 300010
+      }
+    },
+    {
+      "defined_class": "OrderProcessingService",
+      "method_id": "call",
+      "path": "app/services/order_processing_service.rb",
+      "lineno": 8,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "OrderProcessingService",
+        "value": "#<OrderProcessingService:0x0000000000061a81>",
+        "object_id": 400001
+      },
+      "parameters": [
+        {
+          "name": "user",
+          "class": "User",
+          "value": "#<User id: 42>",
+          "object_id": 200002
+        },
+        {
+          "name": "params",
+          "class": "ActionController::Parameters",
+          "value": "{\"product_id\"=>7, \"quantity\"=>3}",
+          "object_id": 300010
+        }
+      ],
+      "id": 11,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "defined_class": "InventoryService",
+      "method_id": "check_availability",
+      "path": "app/services/inventory_service.rb",
+      "lineno": 22,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "InventoryService",
+        "value": "#<InventoryService:0x000000000007a121>",
+        "object_id": 500001
+      },
+      "parameters": [
+        {
+          "name": "product_id",
+          "class": "Integer",
+          "value": "7",
+          "object_id": 100001
+        },
+        {
+          "name": "quantity",
+          "class": "Integer",
+          "value": "3",
+          "object_id": 100002
+        }
+      ],
+      "id": 12,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "SELECT \"products\".\"id\", \"products\".\"stock_count\" FROM \"products\" WHERE \"products\".\"id\" = $1 FOR UPDATE",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[\"7\"]",
+          "object_id": 500010
+        }
+      ],
+      "id": 13,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "id": 14,
+      "event": "return",
+      "parent_id": 13,
+      "elapsed": 0.004123
+    },
+    {
+      "id": 15,
+      "event": "return",
+      "parent_id": 12,
+      "elapsed": 0.005012,
+      "return_value": {
+        "name": "available",
+        "class": "TrueClass",
+        "value": "true",
+        "object_id": 2
+      }
+    },
+    {
+      "defined_class": "Product",
+      "method_id": "find",
+      "path": "app/models/product.rb",
+      "lineno": 5,
+      "static": true,
+      "receiver": {
+        "name": "self",
+        "class": "Module",
+        "value": "Product",
+        "object_id": 600001
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "class": "Integer",
+          "value": "7",
+          "object_id": 100001
+        }
+      ],
+      "id": 16,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "SELECT \"products\".* FROM \"products\" WHERE \"products\".\"id\" = $1 LIMIT $2",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[\"7\", 1]",
+          "object_id": 600010
+        }
+      ],
+      "id": 17,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "id": 18,
+      "event": "return",
+      "parent_id": 17,
+      "elapsed": 0.001892
+    },
+    {
+      "id": 19,
+      "event": "return",
+      "parent_id": 16,
+      "elapsed": 0.002541,
+      "return_value": {
+        "name": "product",
+        "class": "Product",
+        "value": "#<Product id: 7, name: \"Widget Pro\", price: 29.99, stock_count: 150>",
+        "object_id": 600002
+      }
+    },
+    {
+      "defined_class": "OrderProcessingService",
+      "method_id": "calculate_total",
+      "path": "app/services/order_processing_service.rb",
+      "lineno": 67,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "OrderProcessingService",
+        "value": "#<OrderProcessingService:0x0000000000061a81>",
+        "object_id": 400001
+      },
+      "parameters": [
+        {
+          "name": "product",
+          "class": "Product",
+          "value": "#<Product id: 7, price: 29.99>",
+          "object_id": 600002
+        },
+        {
+          "name": "quantity",
+          "class": "Integer",
+          "value": "3",
+          "object_id": 100002
+        }
+      ],
+      "id": 20,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "defined_class": "TaxCalculator",
+      "method_id": "compute",
+      "path": "lib/tax_calculator.rb",
+      "lineno": 18,
+      "static": true,
+      "receiver": {
+        "name": "self",
+        "class": "Module",
+        "value": "TaxCalculator",
+        "object_id": 700001
+      },
+      "parameters": [
+        {
+          "name": "subtotal",
+          "class": "BigDecimal",
+          "value": "89.97",
+          "object_id": 700010
+        },
+        {
+          "name": "state",
+          "class": "String",
+          "value": "CA",
+          "object_id": 700011
+        }
+      ],
+      "id": 21,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "id": 22,
+      "event": "return",
+      "parent_id": 21,
+      "elapsed": 0.000312,
+      "return_value": {
+        "name": "tax",
+        "class": "BigDecimal",
+        "value": "8.10",
+        "object_id": 700012
+      }
+    },
+    {
+      "id": 23,
+      "event": "return",
+      "parent_id": 20,
+      "elapsed": 0.000891,
+      "return_value": {
+        "name": "total",
+        "class": "BigDecimal",
+        "value": "98.07",
+        "object_id": 700013
+      }
+    },
+    {
+      "defined_class": "Order",
+      "method_id": "new",
+      "path": "app/models/order.rb",
+      "lineno": 5,
+      "static": true,
+      "receiver": {
+        "name": "self",
+        "class": "Module",
+        "value": "Order",
+        "object_id": 800001
+      },
+      "parameters": [
+        {
+          "name": "user_id",
+          "class": "Integer",
+          "value": "42",
+          "object_id": 800010
+        },
+        {
+          "name": "total",
+          "class": "BigDecimal",
+          "value": "98.07",
+          "object_id": 700013
+        },
+        {
+          "name": "status",
+          "class": "String",
+          "value": "pending",
+          "object_id": 800011
+        }
+      ],
+      "id": 24,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "id": 25,
+      "event": "return",
+      "parent_id": 24,
+      "elapsed": 0.000123,
+      "return_value": {
+        "name": "order",
+        "class": "Order",
+        "value": "#<Order id: nil, user_id: 42, total: 98.07, status: \"pending\">",
+        "object_id": 800002
+      }
+    },
+    {
+      "defined_class": "Order",
+      "method_id": "valid?",
+      "path": "app/models/order.rb",
+      "lineno": 34,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "Order",
+        "value": "#<Order:0x00000000000c3502>",
+        "object_id": 800002
+      },
+      "parameters": [],
+      "id": 26,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "id": 27,
+      "event": "return",
+      "parent_id": 26,
+      "elapsed": 0.001234,
+      "return_value": {
+        "name": "result",
+        "class": "TrueClass",
+        "value": "true",
+        "object_id": 2
+      }
+    },
+    {
+      "defined_class": "ActiveRecord::Persistence",
+      "method_id": "save!",
+      "path": "gems/activerecord-7.0.4/lib/active_record/persistence.rb",
+      "lineno": 143,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "Order",
+        "value": "#<Order:0x00000000000c3502>",
+        "object_id": 800002
+      },
+      "parameters": [],
+      "id": 28,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "INSERT INTO \"orders\" (\"user_id\", \"total\", \"status\", \"created_at\", \"updated_at\") VALUES ($1, $2, $3, $4, $5) RETURNING \"id\"",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[\"42\", \"98.07\", \"pending\", \"2024-01-15 11:00:00\", \"2024-01-15 11:00:00\"]",
+          "object_id": 800020
+        }
+      ],
+      "id": 29,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "id": 30,
+      "event": "return",
+      "parent_id": 29,
+      "elapsed": 0.007891
+    },
+    {
+      "defined_class": "LineItem",
+      "method_id": "create!",
+      "path": "app/models/line_item.rb",
+      "lineno": 8,
+      "static": true,
+      "receiver": {
+        "name": "self",
+        "class": "Module",
+        "value": "LineItem",
+        "object_id": 900001
+      },
+      "parameters": [
+        {
+          "name": "order_id",
+          "class": "Integer",
+          "value": "nil",
+          "object_id": 900010
+        },
+        {
+          "name": "product_id",
+          "class": "Integer",
+          "value": "7",
+          "object_id": 100001
+        },
+        {
+          "name": "quantity",
+          "class": "Integer",
+          "value": "3",
+          "object_id": 100002
+        },
+        {
+          "name": "unit_price",
+          "class": "BigDecimal",
+          "value": "29.99",
+          "object_id": 900011
+        }
+      ],
+      "id": 31,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "INSERT INTO \"line_items\" (\"order_id\", \"product_id\", \"quantity\", \"unit_price\") VALUES ($1, $2, $3, $4) RETURNING \"id\"",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[\"101\", \"7\", \"3\", \"29.99\"]",
+          "object_id": 900020
+        }
+      ],
+      "id": 32,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "id": 33,
+      "event": "return",
+      "parent_id": 32,
+      "elapsed": 0.003421
+    },
+    {
+      "id": 34,
+      "event": "return",
+      "parent_id": 31,
+      "elapsed": 0.004012,
+      "return_value": {
+        "name": "li",
+        "class": "LineItem",
+        "value": "#<LineItem id: 201, order_id: 101, product_id: 7, quantity: 3>",
+        "object_id": 900002
+      }
+    },
+    {
+      "id": 35,
+      "event": "return",
+      "parent_id": 28,
+      "elapsed": 0.015234,
+      "return_value": {
+        "name": "order",
+        "class": "Order",
+        "value": "#<Order id: 101, user_id: 42, total: 98.07, status: \"pending\">",
+        "object_id": 800002
+      }
+    },
+    {
+      "defined_class": "InventoryService",
+      "method_id": "decrement_stock",
+      "path": "app/services/inventory_service.rb",
+      "lineno": 45,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "InventoryService",
+        "value": "#<InventoryService:0x000000000007a121>",
+        "object_id": 500001
+      },
+      "parameters": [
+        {
+          "name": "product_id",
+          "class": "Integer",
+          "value": "7",
+          "object_id": 100001
+        },
+        {
+          "name": "quantity",
+          "class": "Integer",
+          "value": "3",
+          "object_id": 100002
+        }
+      ],
+      "id": 36,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "UPDATE \"products\" SET \"stock_count\" = \"stock_count\" - $1, \"updated_at\" = $2 WHERE \"products\".\"id\" = $3",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[\"3\", \"2024-01-15 11:00:00\", \"7\"]",
+          "object_id": 500020
+        }
+      ],
+      "id": 37,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "id": 38,
+      "event": "return",
+      "parent_id": 37,
+      "elapsed": 0.005123
+    },
+    {
+      "id": 39,
+      "event": "return",
+      "parent_id": 36,
+      "elapsed": 0.005891
+    },
+    {
+      "defined_class": "PaymentService",
+      "method_id": "charge",
+      "path": "app/services/payment_service.rb",
+      "lineno": 14,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "PaymentService",
+        "value": "#<PaymentService:0x00000000000f4241>",
+        "object_id": 1000001
+      },
+      "parameters": [
+        {
+          "name": "user",
+          "class": "User",
+          "value": "#<User id: 42>",
+          "object_id": 200002
+        },
+        {
+          "name": "amount",
+          "class": "BigDecimal",
+          "value": "98.07",
+          "object_id": 700013
+        },
+        {
+          "name": "order_id",
+          "class": "Integer",
+          "value": "101",
+          "object_id": 800003
+        }
+      ],
+      "id": 40,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "http_client_request": {
+        "request_method": "POST",
+        "url": "https://api.stripe.com/v1/payment_intents",
+        "headers": {
+          "authorization": "Bearer sk_test_xxx",
+          "content-type": "application/x-www-form-urlencoded",
+          "stripe-version": "2023-10-16"
+        }
+      },
+      "message": [
+        {
+          "name": "amount",
+          "class": "Integer",
+          "value": "9807",
+          "object_id": 1000010
+        },
+        {
+          "name": "currency",
+          "class": "String",
+          "value": "usd",
+          "object_id": 1000011
+        },
+        {
+          "name": "customer",
+          "class": "String",
+          "value": "cus_abc123",
+          "object_id": 1000012
+        }
+      ],
+      "id": 41,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "id": 42,
+      "event": "return",
+      "parent_id": 41,
+      "elapsed": 0.342891,
+      "http_client_response": {
+        "status_code": 200,
+        "headers": {
+          "content-type": "application/json",
+          "request-id": "req_stripe123"
+        }
+      }
+    },
+    {
+      "defined_class": "Payment",
+      "method_id": "create!",
+      "path": "app/models/payment.rb",
+      "lineno": 6,
+      "static": true,
+      "receiver": {
+        "name": "self",
+        "class": "Module",
+        "value": "Payment",
+        "object_id": 1100001
+      },
+      "parameters": [
+        {
+          "name": "order_id",
+          "class": "Integer",
+          "value": "101",
+          "object_id": 800003
+        },
+        {
+          "name": "amount",
+          "class": "BigDecimal",
+          "value": "98.07",
+          "object_id": 700013
+        },
+        {
+          "name": "stripe_payment_intent_id",
+          "class": "String",
+          "value": "pi_abc123",
+          "object_id": 1100010
+        },
+        {
+          "name": "status",
+          "class": "String",
+          "value": "succeeded",
+          "object_id": 1100011
+        }
+      ],
+      "id": 43,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "INSERT INTO \"payments\" (\"order_id\", \"amount\", \"stripe_payment_intent_id\", \"status\", \"created_at\") VALUES ($1, $2, $3, $4, $5) RETURNING \"id\"",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[\"101\", \"98.07\", \"pi_abc123\", \"succeeded\", \"2024-01-15 11:00:01\"]",
+          "object_id": 1100020
+        }
+      ],
+      "id": 44,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "id": 45,
+      "event": "return",
+      "parent_id": 44,
+      "elapsed": 0.006234
+    },
+    {
+      "id": 46,
+      "event": "return",
+      "parent_id": 43,
+      "elapsed": 0.007012,
+      "return_value": {
+        "name": "payment",
+        "class": "Payment",
+        "value": "#<Payment id: 301, order_id: 101, amount: 98.07, status: \"succeeded\">",
+        "object_id": 1100002
+      }
+    },
+    {
+      "id": 47,
+      "event": "return",
+      "parent_id": 40,
+      "elapsed": 0.351234,
+      "return_value": {
+        "name": "payment",
+        "class": "Payment",
+        "value": "#<Payment id: 301, status: \"succeeded\">",
+        "object_id": 1100002
+      }
+    },
+    {
+      "defined_class": "Order",
+      "method_id": "update!",
+      "path": "app/models/order.rb",
+      "lineno": 52,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "Order",
+        "value": "#<Order:0x00000000000c3502>",
+        "object_id": 800002
+      },
+      "parameters": [
+        {
+          "name": "status",
+          "class": "String",
+          "value": "confirmed",
+          "object_id": 1200001
+        }
+      ],
+      "id": 48,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "UPDATE \"orders\" SET \"status\" = $1, \"updated_at\" = $2 WHERE \"orders\".\"id\" = $3",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[\"confirmed\", \"2024-01-15 11:00:01\", \"101\"]",
+          "object_id": 1200010
+        }
+      ],
+      "id": 49,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "id": 50,
+      "event": "return",
+      "parent_id": 49,
+      "elapsed": 0.004512
+    },
+    {
+      "id": 51,
+      "event": "return",
+      "parent_id": 48,
+      "elapsed": 0.005123,
+      "return_value": {
+        "name": "order",
+        "class": "Order",
+        "value": "#<Order id: 101, status: \"confirmed\">",
+        "object_id": 800002
+      }
+    },
+    {
+      "defined_class": "NotificationService",
+      "method_id": "order_confirmed",
+      "path": "app/services/notification_service.rb",
+      "lineno": 18,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "NotificationService",
+        "value": "#<NotificationService:0x000000000013d621>",
+        "object_id": 1300001
+      },
+      "parameters": [
+        {
+          "name": "user",
+          "class": "User",
+          "value": "#<User id: 42>",
+          "object_id": 200002
+        },
+        {
+          "name": "order",
+          "class": "Order",
+          "value": "#<Order id: 101>",
+          "object_id": 800002
+        }
+      ],
+      "id": 52,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "http_client_request": {
+        "request_method": "POST",
+        "url": "https://api.sendgrid.com/v3/mail/send",
+        "headers": {
+          "authorization": "Bearer SG.testkey",
+          "content-type": "application/json"
+        }
+      },
+      "message": [
+        {
+          "name": "to",
+          "class": "String",
+          "value": "alice@example.com",
+          "object_id": 1300010
+        },
+        {
+          "name": "subject",
+          "class": "String",
+          "value": "Order #101 confirmed!",
+          "object_id": 1300011
+        }
+      ],
+      "id": 53,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "id": 54,
+      "event": "return",
+      "parent_id": 53,
+      "elapsed": 0.187234,
+      "http_client_response": {
+        "status_code": 202,
+        "headers": {
+          "x-message-id": "msg_xyz789"
+        }
+      }
+    },
+    {
+      "id": 55,
+      "event": "return",
+      "parent_id": 52,
+      "elapsed": 0.188012
+    },
+    {
+      "defined_class": "NotificationService",
+      "method_id": "send_push_notification",
+      "path": "app/services/notification_service.rb",
+      "lineno": 42,
+      "static": false,
+      "receiver": {
+        "name": "self",
+        "class": "NotificationService",
+        "value": "#<NotificationService:0x000000000013d621>",
+        "object_id": 1300001
+      },
+      "parameters": [
+        {
+          "name": "user_id",
+          "class": "Integer",
+          "value": "42",
+          "object_id": 100010
+        },
+        {
+          "name": "message",
+          "class": "String",
+          "value": "Your order #101 has been confirmed!",
+          "object_id": 1400001
+        }
+      ],
+      "id": 56,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "http_client_request": {
+        "request_method": "POST",
+        "url": "https://fcm.googleapis.com/fcm/send",
+        "headers": {
+          "authorization": "key=FCM_SERVER_KEY",
+          "content-type": "application/json"
+        }
+      },
+      "message": [
+        {
+          "name": "to",
+          "class": "String",
+          "value": "/topics/user-42",
+          "object_id": 1400010
+        }
+      ],
+      "id": 57,
+      "event": "call",
+      "thread_id": 47219853920000
+    },
+    {
+      "id": 58,
+      "event": "return",
+      "parent_id": 57,
+      "elapsed": 0.098234,
+      "http_client_response": {
+        "status_code": 200,
+        "headers": {
+          "content-type": "application/json"
+        }
+      }
+    },
+    {
+      "id": 59,
+      "event": "return",
+      "parent_id": 56,
+      "elapsed": 0.099012
+    },
+    {
+      "id": 60,
+      "event": "return",
+      "parent_id": 11,
+      "elapsed": 0.680123,
+      "return_value": {
+        "name": "order",
+        "class": "Order",
+        "value": "#<Order id: 101, status: \"confirmed\", total: 98.07>",
+        "object_id": 800002
+      }
+    },
+    {
+      "id": 61,
+      "event": "return",
+      "parent_id": 8,
+      "elapsed": 0.682341
+    },
+    {
+      "id": 62,
+      "event": "return",
+      "parent_id": 1,
+      "elapsed": 0.683892,
+      "http_server_response": {
+        "status_code": 201,
+        "headers": {
+          "content-type": "application/json; charset=utf-8",
+          "location": "/orders/101",
+          "x-request-id": "req-abc456",
+          "cache-control": "no-cache"
+        }
+      }
+    }
+  ]
+}

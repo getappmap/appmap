@@ -1,0 +1,704 @@
+{
+  "version": "1.13.1",
+  "metadata": {
+    "name": "UsersController#create creates a new user and sends welcome email",
+    "labels": ["test", "authentication"],
+    "app": "myapp",
+    "language": {
+      "name": "ruby",
+      "engine": "ruby",
+      "version": "3.2.0"
+    },
+    "frameworks": [
+      {"name": "Ruby on Rails", "version": "7.0.4"},
+      {"name": "RSpec", "version": "3.12.0"}
+    ],
+    "client": {
+      "name": "appmap",
+      "url": "https://github.com/getappmap/appmap-ruby",
+      "version": "0.91.0"
+    },
+    "recorder": {
+      "type": "tests",
+      "name": "rspec"
+    },
+    "git": {
+      "repository": "https://github.com/myorg/myapp",
+      "branch": "feature/user-registration",
+      "commit": "a3f9c12",
+      "status": []
+    },
+    "test_status": "succeeded",
+    "source_location": "spec/controllers/users_controller_spec.rb:42"
+  },
+  "classMap": [
+    {
+      "name": "app",
+      "type": "package",
+      "children": [
+        {
+          "name": "controllers",
+          "type": "package",
+          "children": [
+            {
+              "name": "UsersController",
+              "type": "class",
+              "children": [
+                {
+                  "name": "create",
+                  "type": "function",
+                  "location": "app/controllers/users_controller.rb:12",
+                  "static": false,
+                  "labels": ["endpoint"]
+                },
+                {
+                  "name": "user_params",
+                  "type": "function",
+                  "location": "app/controllers/users_controller.rb:28",
+                  "static": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "services",
+          "type": "package",
+          "children": [
+            {
+              "name": "UserRegistrationService",
+              "type": "class",
+              "children": [
+                {
+                  "name": "call",
+                  "type": "function",
+                  "location": "app/services/user_registration_service.rb:8",
+                  "static": false,
+                  "labels": ["service"]
+                },
+                {
+                  "name": "validate_email_uniqueness",
+                  "type": "function",
+                  "location": "app/services/user_registration_service.rb:34",
+                  "static": false
+                },
+                {
+                  "name": "create_user",
+                  "type": "function",
+                  "location": "app/services/user_registration_service.rb:42",
+                  "static": false
+                },
+                {
+                  "name": "send_welcome_email",
+                  "type": "function",
+                  "location": "app/services/user_registration_service.rb:58",
+                  "static": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "models",
+          "type": "package",
+          "children": [
+            {
+              "name": "User",
+              "type": "class",
+              "children": [
+                {
+                  "name": "create!",
+                  "type": "function",
+                  "location": "app/models/user.rb:5",
+                  "static": true
+                },
+                {
+                  "name": "after_create",
+                  "type": "function",
+                  "location": "app/models/user.rb:18",
+                  "static": false
+                },
+                {
+                  "name": "valid?",
+                  "type": "function",
+                  "location": "app/models/user.rb:23",
+                  "static": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "mailers",
+          "type": "package",
+          "children": [
+            {
+              "name": "UserMailer",
+              "type": "class",
+              "children": [
+                {
+                  "name": "welcome_email",
+                  "type": "function",
+                  "location": "app/mailers/user_mailer.rb:6",
+                  "static": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "active_record",
+      "type": "package",
+      "children": [
+        {
+          "name": "ActiveRecord",
+          "type": "class",
+          "children": [
+            {
+              "name": "Persistence",
+              "type": "class",
+              "children": [
+                {
+                  "name": "save!",
+                  "type": "function",
+                  "location": "gems/activerecord-7.0.4/lib/active_record/persistence.rb:143",
+                  "static": false,
+                  "labels": ["dao.write"]
+                }
+              ]
+            },
+            {
+              "name": "Relation",
+              "type": "class",
+              "children": [
+                {
+                  "name": "exists?",
+                  "type": "function",
+                  "location": "gems/activerecord-7.0.4/lib/active_record/relation.rb:356",
+                  "static": false,
+                  "labels": ["dao.read"]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "http_server_request": {
+        "request_method": "POST",
+        "path_info": "/users",
+        "protocol": "HTTP/1.1",
+        "headers": {
+          "host": "localhost:3000",
+          "content-type": "application/json",
+          "accept": "application/json",
+          "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+          "accept-encoding": "gzip, deflate, br",
+          "accept-language": "en-US,en;q=0.9",
+          "content-length": "72",
+          "connection": "keep-alive"
+        }
+      },
+      "message": [
+        {
+          "name": "email",
+          "class": "String",
+          "value": "alice@example.com",
+          "object_id": 47219854001234
+        },
+        {
+          "name": "name",
+          "class": "String",
+          "value": "Alice Smith",
+          "object_id": 47219854001235
+        },
+        {
+          "name": "password",
+          "class": "String",
+          "value": "[FILTERED]",
+          "object_id": 47219854001236
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "event": "call",
+      "defined_class": "UsersController",
+      "method_id": "create",
+      "path": "app/controllers/users_controller.rb",
+      "lineno": 12,
+      "static": false,
+      "thread_id": 47219853920000,
+      "receiver": {
+        "name": "self",
+        "class": "UsersController",
+        "value": "#<UsersController:0x00007f8a4c3b2d80>",
+        "object_id": 47219854100001
+      },
+      "parameters": []
+    },
+    {
+      "id": 3,
+      "event": "call",
+      "defined_class": "UsersController",
+      "method_id": "user_params",
+      "path": "app/controllers/users_controller.rb",
+      "lineno": 28,
+      "static": false,
+      "thread_id": 47219853920000,
+      "receiver": {
+        "name": "self",
+        "class": "UsersController",
+        "value": "#<UsersController:0x00007f8a4c3b2d80>",
+        "object_id": 47219854100001
+      },
+      "parameters": []
+    },
+    {
+      "id": 4,
+      "event": "return",
+      "parent_id": 3,
+      "elapsed": 0.000142,
+      "return_value": {
+        "class": "ActionController::Parameters",
+        "value": "{\"email\"=>\"alice@example.com\", \"name\"=>\"Alice Smith\", \"password\"=>\"[FILTERED]\"}",
+        "object_id": 47219854200001
+      }
+    },
+    {
+      "id": 5,
+      "event": "call",
+      "defined_class": "UserRegistrationService",
+      "method_id": "call",
+      "path": "app/services/user_registration_service.rb",
+      "lineno": 8,
+      "static": false,
+      "thread_id": 47219853920000,
+      "receiver": {
+        "name": "self",
+        "class": "UserRegistrationService",
+        "value": "#<UserRegistrationService:0x00007f8a4c3c1a20>",
+        "object_id": 47219854300001
+      },
+      "parameters": [
+        {
+          "name": "params",
+          "class": "ActionController::Parameters",
+          "value": "{\"email\"=>\"alice@example.com\", \"name\"=>\"Alice Smith\", \"password\"=>\"[FILTERED]\"}",
+          "object_id": 47219854200001,
+          "properties": [
+            {"name": "email", "class": "String"},
+            {"name": "name", "class": "String"},
+            {"name": "password", "class": "String"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "event": "call",
+      "defined_class": "UserRegistrationService",
+      "method_id": "validate_email_uniqueness",
+      "path": "app/services/user_registration_service.rb",
+      "lineno": 34,
+      "static": false,
+      "thread_id": 47219853920000,
+      "receiver": {
+        "name": "self",
+        "class": "UserRegistrationService",
+        "value": "#<UserRegistrationService:0x00007f8a4c3c1a20>",
+        "object_id": 47219854300001
+      },
+      "parameters": [
+        {
+          "name": "email",
+          "class": "String",
+          "value": "alice@example.com",
+          "object_id": 47219854001234
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "event": "call",
+      "defined_class": "ActiveRecord::Relation",
+      "method_id": "exists?",
+      "path": "gems/activerecord-7.0.4/lib/active_record/relation.rb",
+      "lineno": 356,
+      "static": false,
+      "thread_id": 47219853920000,
+      "receiver": {
+        "name": "self",
+        "class": "ActiveRecord::Relation",
+        "value": "#<ActiveRecord::Relation [User]>",
+        "object_id": 47219854400001
+      },
+      "parameters": [
+        {
+          "name": "conditions",
+          "class": "Hash",
+          "value": "{:email=>\"alice@example.com\"}",
+          "object_id": 47219854400002,
+          "properties": [
+            {"name": "email", "class": "String"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "SELECT 1 AS one FROM \"users\" WHERE \"users\".\"email\" = $1 LIMIT $2",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[\"alice@example.com\", 1]",
+          "object_id": 47219854500001
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "event": "return",
+      "parent_id": 8,
+      "elapsed": 0.003241
+    },
+    {
+      "id": 10,
+      "event": "return",
+      "parent_id": 7,
+      "elapsed": 0.004187,
+      "return_value": {
+        "class": "FalseClass",
+        "value": "false",
+        "object_id": 8
+      }
+    },
+    {
+      "id": 11,
+      "event": "return",
+      "parent_id": 6,
+      "elapsed": 0.004521,
+      "return_value": {
+        "class": "TrueClass",
+        "value": "true",
+        "object_id": 2
+      }
+    },
+    {
+      "id": 12,
+      "event": "call",
+      "defined_class": "UserRegistrationService",
+      "method_id": "create_user",
+      "path": "app/services/user_registration_service.rb",
+      "lineno": 42,
+      "static": false,
+      "thread_id": 47219853920000,
+      "receiver": {
+        "name": "self",
+        "class": "UserRegistrationService",
+        "value": "#<UserRegistrationService:0x00007f8a4c3c1a20>",
+        "object_id": 47219854300001
+      },
+      "parameters": [
+        {
+          "name": "email",
+          "class": "String",
+          "value": "alice@example.com",
+          "object_id": 47219854001234
+        },
+        {
+          "name": "name",
+          "class": "String",
+          "value": "Alice Smith",
+          "object_id": 47219854001235
+        },
+        {
+          "name": "password_digest",
+          "class": "String",
+          "value": "$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/...",
+          "object_id": 47219854600001
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "event": "call",
+      "defined_class": "User",
+      "method_id": "valid?",
+      "path": "app/models/user.rb",
+      "lineno": 23,
+      "static": false,
+      "thread_id": 47219853920000,
+      "receiver": {
+        "name": "self",
+        "class": "User",
+        "value": "#<User id: nil, email: \"alice@example.com\", name: \"Alice Smith\", created_at: nil>",
+        "object_id": 47219854700001
+      },
+      "parameters": []
+    },
+    {
+      "id": 14,
+      "event": "return",
+      "parent_id": 13,
+      "elapsed": 0.001823,
+      "return_value": {
+        "class": "TrueClass",
+        "value": "true",
+        "object_id": 2
+      }
+    },
+    {
+      "id": 15,
+      "event": "call",
+      "defined_class": "ActiveRecord::Persistence",
+      "method_id": "save!",
+      "path": "gems/activerecord-7.0.4/lib/active_record/persistence.rb",
+      "lineno": 143,
+      "static": false,
+      "thread_id": 47219853920000,
+      "receiver": {
+        "name": "self",
+        "class": "User",
+        "value": "#<User id: nil, email: \"alice@example.com\", name: \"Alice Smith\", created_at: nil>",
+        "object_id": 47219854700001
+      },
+      "parameters": []
+    },
+    {
+      "id": 16,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "sql_query": {
+        "database_type": "postgresql",
+        "sql": "INSERT INTO \"users\" (\"email\", \"name\", \"password_digest\", \"created_at\", \"updated_at\") VALUES ($1, $2, $3, $4, $5) RETURNING \"id\"",
+        "server_version": "14.5"
+      },
+      "message": [
+        {
+          "name": "binds",
+          "class": "Array",
+          "value": "[\"alice@example.com\", \"Alice Smith\", \"$2a$12$LQv...\", \"2024-01-15 10:23:45\", \"2024-01-15 10:23:45\"]",
+          "object_id": 47219854800001
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "event": "return",
+      "parent_id": 16,
+      "elapsed": 0.008432
+    },
+    {
+      "id": 18,
+      "event": "call",
+      "defined_class": "User",
+      "method_id": "after_create",
+      "path": "app/models/user.rb",
+      "lineno": 18,
+      "static": false,
+      "thread_id": 47219853920000,
+      "receiver": {
+        "name": "self",
+        "class": "User",
+        "value": "#<User id: 42, email: \"alice@example.com\", name: \"Alice Smith\", created_at: \"2024-01-15 10:23:45\">",
+        "object_id": 47219854700001
+      },
+      "parameters": []
+    },
+    {
+      "id": 19,
+      "event": "return",
+      "parent_id": 18,
+      "elapsed": 0.000089
+    },
+    {
+      "id": 20,
+      "event": "return",
+      "parent_id": 15,
+      "elapsed": 0.010891,
+      "return_value": {
+        "class": "User",
+        "value": "#<User id: 42, email: \"alice@example.com\", name: \"Alice Smith\", created_at: \"2024-01-15 10:23:45\">",
+        "object_id": 47219854700001
+      }
+    },
+    {
+      "id": 21,
+      "event": "return",
+      "parent_id": 12,
+      "elapsed": 0.013204,
+      "return_value": {
+        "class": "User",
+        "value": "#<User id: 42, email: \"alice@example.com\">",
+        "object_id": 47219854700001
+      }
+    },
+    {
+      "id": 22,
+      "event": "call",
+      "defined_class": "UserRegistrationService",
+      "method_id": "send_welcome_email",
+      "path": "app/services/user_registration_service.rb",
+      "lineno": 58,
+      "static": false,
+      "thread_id": 47219853920000,
+      "receiver": {
+        "name": "self",
+        "class": "UserRegistrationService",
+        "value": "#<UserRegistrationService:0x00007f8a4c3c1a20>",
+        "object_id": 47219854300001
+      },
+      "parameters": [
+        {
+          "name": "user",
+          "class": "User",
+          "value": "#<User id: 42, email: \"alice@example.com\">",
+          "object_id": 47219854700001,
+          "properties": [
+            {"name": "id", "class": "Integer"},
+            {"name": "email", "class": "String"},
+            {"name": "name", "class": "String"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "event": "call",
+      "defined_class": "UserMailer",
+      "method_id": "welcome_email",
+      "path": "app/mailers/user_mailer.rb",
+      "lineno": 6,
+      "static": false,
+      "thread_id": 47219853920000,
+      "receiver": {
+        "name": "self",
+        "class": "UserMailer",
+        "value": "#<UserMailer:0x00007f8a4c3d5e40>",
+        "object_id": 47219854900001
+      },
+      "parameters": [
+        {
+          "name": "user",
+          "class": "User",
+          "value": "#<User id: 42, email: \"alice@example.com\">",
+          "object_id": 47219854700001
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "event": "call",
+      "thread_id": 47219853920000,
+      "http_client_request": {
+        "request_method": "POST",
+        "url": "https://api.sendgrid.com/v3/mail/send",
+        "headers": {
+          "authorization": "Bearer SG.test-key",
+          "content-type": "application/json",
+          "user-agent": "sendgrid/3.7.0;ruby",
+          "accept": "application/json"
+        }
+      },
+      "message": [
+        {
+          "name": "to",
+          "class": "String",
+          "value": "alice@example.com",
+          "object_id": 47219855000001
+        },
+        {
+          "name": "subject",
+          "class": "String",
+          "value": "Welcome to MyApp!",
+          "object_id": 47219855000002
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "event": "return",
+      "parent_id": 24,
+      "elapsed": 0.234567,
+      "http_client_response": {
+        "status_code": 202,
+        "headers": {
+          "content-type": "application/json",
+          "x-message-id": "abc123xyz",
+          "x-request-id": "req-47219855"
+        }
+      }
+    },
+    {
+      "id": 26,
+      "event": "return",
+      "parent_id": 23,
+      "elapsed": 0.235891,
+      "return_value": {
+        "class": "Mail::Message",
+        "value": "#<Mail::Message to=[\"alice@example.com\"] subject=\"Welcome to MyApp!\">",
+        "object_id": 47219855100001
+      }
+    },
+    {
+      "id": 27,
+      "event": "return",
+      "parent_id": 22,
+      "elapsed": 0.236214
+    },
+    {
+      "id": 28,
+      "event": "return",
+      "parent_id": 5,
+      "elapsed": 0.254182,
+      "return_value": {
+        "class": "User",
+        "value": "#<User id: 42, email: \"alice@example.com\">",
+        "object_id": 47219854700001
+      }
+    },
+    {
+      "id": 29,
+      "event": "return",
+      "parent_id": 2,
+      "elapsed": 0.255017
+    },
+    {
+      "id": 30,
+      "event": "return",
+      "parent_id": 1,
+      "elapsed": 0.255891,
+      "http_server_response": {
+        "status_code": 201,
+        "headers": {
+          "content-type": "application/json; charset=utf-8",
+          "location": "/users/42",
+          "x-request-id": "req-47219853",
+          "cache-control": "no-cache",
+          "x-frame-options": "SAMEORIGIN",
+          "x-xss-protection": "0",
+          "x-content-type-options": "nosniff",
+          "x-permitted-cross-domain-policies": "none",
+          "referrer-policy": "strict-origin-when-cross-origin"
+        }
+      }
+    }
+  ]
+}
