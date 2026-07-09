@@ -117,6 +117,12 @@ Metadata has the following attributes:
 * **exception** *Optional* unhandled exception which occurred during scenairo processing.
   * **class** *Required* exception class name.
   * **message** *Optional* exception message.
+* **trimmed** *Optional* provenance of value truncation applied to this file (the AppMap CLI's `trim` command). Truncation is one-way; after repeated runs this records the smallest cap applied.
+  * **version** *Required* version of the tool that trimmed the file.
+  * **max_length** *Required* maximum captured-value string length the file was truncated to.
+* **sanitized** *Optional* provenance of value masking applied to this file (the AppMap CLI's `sanitize` command). Every captured value string has been replaced with an equality-preserving token; masking is one-way, and after repeated runs `allow_values` records the intersection of the allowlists applied.
+  * **version** *Required* version of the tool that sanitized the file.
+  * **allow_values** *Required* values kept verbatim (exact whole-value matches), beyond the tool's built-in enumerable values (`true`, `false`, `null`, etc).
 
 #### Example
 
@@ -621,6 +627,9 @@ A schema validator is available:
 [appmap-js validator](https://github.com/getappmap/appmap-js/tree/main/packages/validate)
 
 # Changelog
+## v1.14.0
+* Add optional `metadata.trimmed` and `metadata.sanitized` provenance markers, written by the AppMap CLI's `trim` and `sanitize` commands.
+
 ## v1.13.1
 * Add `code` to `metadata.recorder.type`
 
